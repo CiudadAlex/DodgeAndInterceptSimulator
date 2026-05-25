@@ -13,13 +13,13 @@ public class NoCollisionPathFinder {
 
         Dodger dodger = new Dodger(origin.clonePosition(), Velocity.ZERO, radius);
         StoppedObject stoppedTarget = new StoppedObject(target, radius);
+        double currentTime = 0;
 
         while (true) {
 
-            double currentTime = 0;
-
             List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(dodger, currentTime, listMobileObject, precision);
 
+            currentTime = currentTime + TIME_STEP;
         }
     }
 
