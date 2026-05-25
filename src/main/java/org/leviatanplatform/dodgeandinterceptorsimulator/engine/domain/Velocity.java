@@ -2,6 +2,8 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain;
 
 public class Velocity {
 
+    public static final Velocity ZERO = new Velocity(0, 0);
+
     private final double x;
     private final double y;
 
