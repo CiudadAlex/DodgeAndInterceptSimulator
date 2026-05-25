@@ -68,4 +68,8 @@ public class Dodger extends Projectile {
 
         return new Velocity(vx, vy);
     }
+
+    public List<Movement> getListMovement() {
+        return listMovement;
+    }
 }
