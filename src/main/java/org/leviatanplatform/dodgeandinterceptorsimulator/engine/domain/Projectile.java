@@ -1,6 +1,6 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain;
 
-public class Projectile {
+public class Projectile implements MobileObject {
 
     private final Position initialPosition;
     private final Velocity velocity;

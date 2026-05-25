@@ -1,19 +1,19 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools;
 
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.MobileObject;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Position;
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Projectile;
 
-public class ProjectileCollisionDetector {
+public class MobileObjectCollisionDetector {
 
-    public static boolean isThereCollision(Projectile projectile1, Projectile projectile2, double timeInitial, double timeFinal, int precision) {
+    public static boolean isThereCollision(MobileObject mobileObject1, MobileObject mobileObject2, double timeInitial, double timeFinal, int precision) {
 
-        double sumRadius = projectile1.getRadius() + projectile2.getRadius();
+        double sumRadius = mobileObject1.getRadius() + mobileObject2.getRadius();
         double timeStep = (timeFinal - timeInitial) / precision;
 
         for (int i = 0; i <= precision; i++) {
             double time = timeInitial + i * timeStep;
-            Position position1 = projectile1.getPosition(time);
-            Position position2 = projectile2.getPosition(time);
+            Position position1 = mobileObject1.getPosition(time);
+            Position position2 = mobileObject2.getPosition(time);
             double distance = calculateDistance(position1, position2);
 
             if (distance < sumRadius) {
