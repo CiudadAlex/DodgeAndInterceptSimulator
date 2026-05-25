@@ -15,8 +15,11 @@ public class NoCollisionPathFinder {
 
         while (true) {
 
-            Position currentPosition = dodger.getInitialPosition();
             double currentTime = 0;
+
+            for (Movement movement : Movement.values()) {
+
+            }
 
 
             boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(dodger, listMobileObject, currentTime, currentTime + TIME_STEP, precision);
