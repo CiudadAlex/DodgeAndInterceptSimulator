@@ -2,9 +2,9 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain;
 
 public class Projectile implements MobileObject {
 
-    private final Position initialPosition;
-    private final Velocity velocity;
-    private final double radius;
+    protected Position initialPosition;
+    protected Velocity velocity;
+    protected double radius;
 
     public Projectile(Position initialPosition, Velocity velocity, double radius) {
         this.initialPosition = initialPosition;
