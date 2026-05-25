@@ -3,7 +3,23 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.MobileObject;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Position;
 
+import java.util.List;
+
 public class MobileObjectCollisionDetector {
+
+    public static <T extends MobileObject> boolean isThereCollision(MobileObject mobileObject1, List<T> listMobileObject2, double timeInitial, double timeFinal, int precision) {
+
+        for (MobileObject mobileObject2 : listMobileObject2) {
+
+            boolean isThereCollision = isThereCollision(mobileObject1, mobileObject2, timeInitial, timeFinal, precision);
+
+            if (isThereCollision) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public static boolean isThereCollision(MobileObject mobileObject1, MobileObject mobileObject2, double timeInitial, double timeFinal, int precision) {
 

@@ -1,5 +1,6 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools;
 
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Dodger;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.MobileObject;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Movement;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Position;
@@ -8,12 +9,20 @@ import java.util.List;
 
 public class NoCollisionPathFinder {
 
-    public static List<Movement> findNoCollisionPath(Position initialPosition, List<MobileObject> listMobileObject, int precision) {
+    private static final double TIME_STEP = 1;
+
+    public static <T extends MobileObject> List<Movement> findNoCollisionPath(Dodger dodger, List<T> listMobileObject, Position target, int precision) {
 
         while (true) {
 
+            Position currentPosition = dodger.getInitialPosition();
+            double currentTime = 0;
 
-            // MobileObjectCollisionDetector.isThereCollision(MobileObject mobileObject1, MobileObject mobileObject2, double timeInitial, double timeFinal, int precision)
+
+            boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(dodger, listMobileObject, currentTime, currentTime + TIME_STEP, precision);
+
+
+            //
         }
     }
 }
