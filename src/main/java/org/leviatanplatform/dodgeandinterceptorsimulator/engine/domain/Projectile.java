@@ -4,10 +4,12 @@ public class Projectile {
 
     private final Position initialPosition;
     private final Velocity velocity;
+    private final double radius;
 
-    public Projectile(Position initialPosition, Velocity velocity) {
+    public Projectile(Position initialPosition, Velocity velocity, double radius) {
         this.initialPosition = initialPosition;
         this.velocity = velocity;
+        this.radius = radius;
     }
 
     public Position getInitialPosition() {
@@ -16,6 +18,10 @@ public class Projectile {
 
     public Velocity getVelocity() {
         return velocity;
+    }
+
+    public double getRadius() {
+        return radius;
     }
 
     public Position getPosition(double time) {
