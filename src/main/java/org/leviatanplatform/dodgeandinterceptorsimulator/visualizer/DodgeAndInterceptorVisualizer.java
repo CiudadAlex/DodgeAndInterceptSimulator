@@ -1,6 +1,7 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.visualizer;
 
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.World;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +11,7 @@ public class DodgeAndInterceptorVisualizer {
     private final PixelCanvas pixelCanvas;
 
     private final World world;
+    private double time = 0;
     private final int w;
     private final int h;
     private int millisWaitBetweenMovements = 500;
@@ -41,6 +43,8 @@ public class DodgeAndInterceptorVisualizer {
         paintCanvas();
     }
 
+    // FIXME init a thread that changes time and refreshes UI
+
     private void refreshAll() {
         paintCanvas();
     }
@@ -64,11 +68,23 @@ public class DodgeAndInterceptorVisualizer {
 
         frame.setTitle("Dodge and Intercept simulator");
 
-        Color color = Color.RED;
-        // FIXME finish
-        //pixelCanvas.setCircle(Position center, double radius, Color color);
+        Dodger dodger = world.getDodger();
+        Environment environment = world.getEnvironment();
+        StoppedObject target = world.getTarget();
+
+        paintMobileObject(dodger, Color.GREEN, time);
+
+        for (Projectile projectile : environment.getProjectiles()) {
+            paintMobileObject(projectile, Color.YELLOW, time);
+        }
+
+        paintMobileObject(target, Color.RED, time);
 
         pixelCanvas.repaint();
+    }
+
+    public void paintMobileObject(MobileObject mobileObject, Color color, double time) {
+        pixelCanvas.setCircle(mobileObject.getPosition(time), mobileObject.getRadius(), color);
     }
 
     public void accelerateMovement(float acceleratingFactor) {
