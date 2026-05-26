@@ -22,6 +22,8 @@ public class CommandListener extends KeyAdapter {
             case KeyEvent.VK_S -> start();
             case KeyEvent.VK_0 -> accelerateExploring();
             case KeyEvent.VK_9 -> decelerateExploring();
+            case KeyEvent.VK_1 -> zoomOut();
+            case KeyEvent.VK_2 -> zoomIn();
             case KeyEvent.VK_H -> help();
         }
     }
@@ -36,6 +38,14 @@ public class CommandListener extends KeyAdapter {
     }
 
     private void right() {
+    }
+
+    private void zoomOut() {
+        dodgeAndInterceptorVisualizer.zoom(-1);
+    }
+
+    private void zoomIn() {
+        dodgeAndInterceptorVisualizer.zoom(1);
     }
 
     private void start() {

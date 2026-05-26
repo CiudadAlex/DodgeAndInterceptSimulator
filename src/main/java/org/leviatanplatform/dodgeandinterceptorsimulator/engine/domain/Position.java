@@ -52,6 +52,10 @@ public class Position implements PositionInfo {
         }
     }
 
+    public Position cloneAdding(double addToX, double addToY) {
+        return new Position(x + addToX, y + addToY);
+    }
+
     public Position clonePosition() {
         return new Position(x, y);
     }

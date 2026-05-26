@@ -1,5 +1,8 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.visualizer;
 
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Position;
+import org.leviatanplatform.dodgeandinterceptorsimulator.visualizer.model.PixelCoordinates;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,12 +21,32 @@ public class PixelCanvas extends JPanel {
         this.canvas = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
     }
 
-    public void setRectangle(int x, int y, Color color) {
+    public void setCircle(Position center, double radius, Color color) {
 
         Graphics2D g = this.canvas.createGraphics();
 
+        Position upperLeftCorner = center.cloneAdding(-radius, radius);
+        PixelCoordinates pixelCoordinates = transformCoordinates(upperLeftCorner);
+        int px = pixelCoordinates.getX();
+        int py = pixelCoordinates.getY();
+        int pradius = transformLength(radius);
+
         g.setColor(color);
-        g.fillRect(x * pixelScale, y * pixelScale, pixelScale, pixelScale);
+        g.fillOval(px, py, pradius, pradius);
+    }
+
+    private int transformLength(double length) {
+        return (int) Math.round(length * pixelScale);
+    }
+
+    private PixelCoordinates transformCoordinates(Position position) {
+        double x = position.getX();
+        double y = position.getY();
+
+        int px = (int) Math.round(  x * pixelScale + w / 2.0);
+        int py = (int) Math.round(- y * pixelScale + h / 2.0);
+
+        return new PixelCoordinates(px, py);
     }
 
     public void reset() {

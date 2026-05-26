@@ -60,21 +60,19 @@ public class DodgeAndInterceptorVisualizer {
 
         frame.setTitle("Dodge and Intercept simulator");
 
-        int rows = 0;
-        int columns = 0;
-
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < columns; c++) {
-                Color color = Color.RED;
-                pixelCanvas.setRectangle(c, r, color);
-            }
-        }
+        Color color = Color.RED;
+        // FIXME finish
+        //pixelCanvas.setCircle(Position center, double radius, Color color);
 
         pixelCanvas.repaint();
     }
 
     public void accelerateMovement(float acceleratingFactor) {
         millisWaitBetweenMovements = (int) Math.ceil(millisWaitBetweenMovements/acceleratingFactor);
+    }
+
+    public void zoom(int pixelsToAdd) {
+        pixelCanvas.addToPixelScale(pixelsToAdd);
     }
 
 }
