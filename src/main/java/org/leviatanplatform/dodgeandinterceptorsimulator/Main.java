@@ -1,6 +1,7 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator;
 
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Environment;
+import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.FrontProjectilesEnvironment;
 import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.NothingEnvironment;
 import org.leviatanplatform.dodgeandinterceptorsimulator.visualizer.DodgeAndInterceptorVisualizer;
 
@@ -25,6 +26,7 @@ public class Main {
 
     private static Environment getEnvironment() {
         Environment nothingEnvironment = new NothingEnvironment();
-        return nothingEnvironment;
+        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment();
+        return frontProjectilesEnvironment;
     }
 }
