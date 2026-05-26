@@ -1,5 +1,7 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.visualizer;
 
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.World;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,13 +9,15 @@ public class DodgeAndInterceptorVisualizer {
 
     private final PixelCanvas pixelCanvas;
 
+    private final World world;
     private final int w;
     private final int h;
     private int millisWaitBetweenMovements = 500;
     private JFrame frame;
 
-    public DodgeAndInterceptorVisualizer(int w, int h, int pixelScale) {
+    public DodgeAndInterceptorVisualizer(World world, int w, int h, int pixelScale) {
 
+        this.world = world;
         this.w = w;
         this.h = h;
 

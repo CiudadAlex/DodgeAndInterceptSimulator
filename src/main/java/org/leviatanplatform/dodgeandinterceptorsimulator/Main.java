@@ -1,6 +1,7 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator;
 
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Environment;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.World;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
 import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.FrontProjectilesEnvironment;
 import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.NothingEnvironment;
 import org.leviatanplatform.dodgeandinterceptorsimulator.visualizer.DodgeAndInterceptorVisualizer;
@@ -16,10 +17,13 @@ public class Main {
         int pixelScale = 15;
         int radius = 3;
 
+        Dodger dodger = new Dodger(new Position(-11, 0), Velocity.ZERO, radius);
         Environment env = getEnvironment();
+        StoppedObject target = new StoppedObject(new Position(11, 0), radius);
+        World world = new World(dodger, env, target);
 
         SwingUtilities.invokeLater(() -> {
-            DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(w, h, pixelScale);
+            DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(world, w, h, pixelScale);
             visualizer.show();
         });
     }
