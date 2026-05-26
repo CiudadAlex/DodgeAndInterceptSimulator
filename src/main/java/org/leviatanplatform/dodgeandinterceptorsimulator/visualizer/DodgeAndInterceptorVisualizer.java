@@ -3,7 +3,7 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.visualizer;
 import javax.swing.*;
 import java.awt.*;
 
-public class DodgeAmdInterceptorVisualizer {
+public class DodgeAndInterceptorVisualizer {
 
     private final PixelCanvas pixelCanvas;
 
@@ -12,7 +12,7 @@ public class DodgeAmdInterceptorVisualizer {
     private int millisWaitBetweenMovements = 500;
     private JFrame frame;
 
-    public DodgeAmdInterceptorVisualizer(int w, int h, int pixelScale) {
+    public DodgeAndInterceptorVisualizer(int w, int h, int pixelScale) {
 
         this.w = w;
         this.h = h;
@@ -24,7 +24,7 @@ public class DodgeAmdInterceptorVisualizer {
 
         if (frame == null) {
 
-            frame = new JFrame("Roomba Simulator");
+            frame = new JFrame("Dodge and Interceptor Simulator");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(w + 30, h + 50);
             frame.setVisible(true);

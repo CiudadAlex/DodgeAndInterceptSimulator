@@ -5,10 +5,10 @@ import java.awt.event.KeyEvent;
 
 public class CommandListener extends KeyAdapter {
 
-    private DodgeAmdInterceptorVisualizer dodgeAmdInterceptorVisualizer;
+    private DodgeAndInterceptorVisualizer dodgeAndInterceptorVisualizer;
 
-    public CommandListener(DodgeAmdInterceptorVisualizer roombaVisualizer) {
-        this.dodgeAmdInterceptorVisualizer = roombaVisualizer;
+    public CommandListener(DodgeAndInterceptorVisualizer roombaVisualizer) {
+        this.dodgeAndInterceptorVisualizer = roombaVisualizer;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -42,11 +42,11 @@ public class CommandListener extends KeyAdapter {
     }
 
     private void accelerateExploring() {
-        dodgeAmdInterceptorVisualizer.accelerateMovement(2);
+        dodgeAndInterceptorVisualizer.accelerateMovement(2);
     }
 
     private void decelerateExploring() {
-        dodgeAmdInterceptorVisualizer.accelerateMovement(0.5f);
+        dodgeAndInterceptorVisualizer.accelerateMovement(0.5f);
     }
 
     private void help() {
