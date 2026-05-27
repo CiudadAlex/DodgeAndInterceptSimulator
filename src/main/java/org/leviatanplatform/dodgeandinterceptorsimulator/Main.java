@@ -14,7 +14,7 @@ public class Main {
 
         int w = 1000;
         int h = 800;
-        int pixelScale = 15;
+        int pixelScale = 5;
         int radius = 3;
 
         Dodger dodger = new Dodger(new Position(-11, 0), Velocity.ZERO, radius);
