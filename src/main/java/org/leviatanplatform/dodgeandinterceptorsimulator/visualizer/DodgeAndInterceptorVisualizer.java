@@ -1,6 +1,6 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.visualizer;
 
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.World;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.Player;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools.NoCollisionPathFinder;
 
@@ -14,16 +14,16 @@ public class DodgeAndInterceptorVisualizer {
 
     private final PixelCanvas pixelCanvas;
 
-    private final World world;
+    private final Player player;
     private double time = 0;
     private final int w;
     private final int h;
     private int millisWaitBetweenMovements = 500;
     private JFrame frame;
 
-    public DodgeAndInterceptorVisualizer(World world, int w, int h, int pixelScale) {
+    public DodgeAndInterceptorVisualizer(Player player, int w, int h, int pixelScale) {
 
-        this.world = world;
+        this.player = player;
         this.w = w;
         this.h = h;
 
@@ -66,11 +66,11 @@ public class DodgeAndInterceptorVisualizer {
 
         time = time + TIME_DELTA;
 
-        Dodger dodger = world.getDodger();
+        Dodger dodger = player.getDodger();
         Position origin = dodger.getPosition(time);
         double radius = dodger.getRadius();
-        List<Projectile> listMobileObject = world.getEnvironment().getProjectiles();
-        Position target = world.getTarget().getPosition(time);
+        List<Projectile> listMobileObject = player.getEnvironment().getProjectiles();
+        Position target = player.getTarget().getPosition(time);
         int precision = 5;
         List<Movement> listMovement = NoCollisionPathFinder.findNoCollisionPath(origin, radius, listMobileObject, target, precision);
 
@@ -107,9 +107,9 @@ public class DodgeAndInterceptorVisualizer {
         long timeLong = Math.round(100 * time);
         frame.setTitle("Dodge and Intercept simulator. Time " + timeLong/100f);
 
-        Dodger dodger = world.getDodger();
-        Environment environment = world.getEnvironment();
-        StoppedObject target = world.getTarget();
+        Dodger dodger = player.getDodger();
+        Environment environment = player.getEnvironment();
+        StoppedObject target = player.getTarget();
 
         paintMobileObject(dodger, Color.GREEN, time);
 
