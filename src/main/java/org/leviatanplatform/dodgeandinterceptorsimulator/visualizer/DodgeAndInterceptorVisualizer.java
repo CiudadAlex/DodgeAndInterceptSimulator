@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class DodgeAndInterceptorVisualizer {
 
-    private static final double TIME_DELTA = 0.05;
+    private static final double TIME_DELTA = 0.2;
 
     private final PixelCanvas pixelCanvas;
 
@@ -78,14 +78,9 @@ public class DodgeAndInterceptorVisualizer {
         paintCanvas();
     }
 
-    public void resetCanvas() {
-        SwingUtilities.invokeLater(() -> {
-            pixelCanvas.reset();
-        });
-    }
-
     public void paintCanvas() {
         SwingUtilities.invokeLater(() -> {
+            pixelCanvas.reset();
             innerPaintCanvas();
             pixelCanvas.invalidate();
             pixelCanvas.validate();
