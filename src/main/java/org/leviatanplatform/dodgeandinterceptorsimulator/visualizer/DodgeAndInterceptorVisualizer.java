@@ -65,13 +65,17 @@ public class DodgeAndInterceptorVisualizer {
         time = time + TIME_DELTA;
 
         // FIXME put intelligence of dodger here
+        sleep();
+
+        return false;
+    }
+
+    private static void sleep() {
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        return false;
     }
 
     private void refreshAll() {
