@@ -66,13 +66,7 @@ public class DodgeAndInterceptorVisualizer {
 
         time = time + TIME_DELTA;
 
-        Dodger dodger = player.getDodger();
-        Position origin = dodger.getPosition(time);
-        double radius = dodger.getRadius();
-        List<Projectile> listMobileObject = player.getEnvironment().getProjectiles();
-        Position target = player.getTarget().getPosition(time);
-        int precision = 5;
-        List<Movement> listMovement = NoCollisionPathFinder.findNoCollisionPath(origin, radius, listMobileObject, target, precision);
+
 
         // FIXME put intelligence of dodger here
         sleep();

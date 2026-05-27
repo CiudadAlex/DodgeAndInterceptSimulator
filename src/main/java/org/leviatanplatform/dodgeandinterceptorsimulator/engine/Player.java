@@ -1,10 +1,13 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.engine;
 
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Dodger;
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Environment;
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.StoppedObject;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools.NoCollisionPathFinder;
+
+import java.util.List;
 
 public class Player {
+
+    private static final double TIME_STEP = 1;
 
     private Dodger dodger;
     private Environment environment;
@@ -14,6 +17,16 @@ public class Player {
         this.dodger = dodger;
         this.environment = environment;
         this.target = target;
+    }
+
+    private void calculateStrategy() {
+
+        Position positionOrigin = dodger.getPosition(0);
+        double radius = dodger.getRadius();
+        List<Projectile> listMobileObject = environment.getProjectiles();
+        Position positionTarget = target.getPosition(0);
+        int precision = 5;
+        List<Movement> listMovement = NoCollisionPathFinder.findNoCollisionPath(positionOrigin, radius, listMobileObject, positionTarget, precision, TIME_STEP);
     }
 
     public Dodger getDodger() {

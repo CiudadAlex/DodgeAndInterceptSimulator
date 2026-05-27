@@ -7,9 +7,7 @@ import java.util.List;
 
 public class NoCollisionPathFinder {
 
-    private static final double TIME_STEP = 1;
-
-    public static <T extends MobileObject> List<Movement> findNoCollisionPath(Position origin, double radius, List<T> listMobileObject, Position target, int precision) {
+    public static <T extends MobileObject> List<Movement> findNoCollisionPath(Position origin, double radius, List<T> listMobileObject, Position target, int precision, double timeStep) {
 
         Dodger dodger = new Dodger(origin.clonePosition(), Velocity.ZERO, radius);
         List<Dodger> listDodgerLastIteration = List.of(dodger);
@@ -18,24 +16,24 @@ public class NoCollisionPathFinder {
 
         while (true) {
 
-            List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(listDodgerLastIteration, currentTime, listMobileObject, precision);
+            List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(listDodgerLastIteration, currentTime, listMobileObject, precision, timeStep);
 
-            Dodger dodgerInTarget = getDodgerThatHitsTheTarget(listDodgerIteration, stoppedTarget, currentTime, precision);
+            Dodger dodgerInTarget = getDodgerThatHitsTheTarget(listDodgerIteration, stoppedTarget, currentTime, precision, timeStep);
 
             if (dodgerInTarget != null) {
                 return dodgerInTarget.getListMovement();
             }
 
             listDodgerLastIteration = listDodgerIteration;
-            currentTime = currentTime + TIME_STEP;
+            currentTime = currentTime + timeStep;
         }
     }
 
-    private static Dodger getDodgerThatHitsTheTarget(List<Dodger> listDodger, StoppedObject stoppedTarget, double currentTime, int precision) {
+    private static Dodger getDodgerThatHitsTheTarget(List<Dodger> listDodger, StoppedObject stoppedTarget, double currentTime, int precision, double timeStep) {
 
         for (Dodger dodger : listDodger) {
 
-            boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(dodger, List.of(stoppedTarget), currentTime, currentTime + TIME_STEP, precision);
+            boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(dodger, List.of(stoppedTarget), currentTime, currentTime + timeStep, precision);
 
             if (isThereCollision) {
                 return dodger;
@@ -45,19 +43,19 @@ public class NoCollisionPathFinder {
         return null;
     }
 
-    private static <T extends MobileObject> List<Dodger> getNewListDodgerOfTimeStep(List<Dodger> listDodger, double currentTime, List<T> listMobileObject, int precision) {
+    private static <T extends MobileObject> List<Dodger> getNewListDodgerOfTimeStep(List<Dodger> listDodger, double currentTime, List<T> listMobileObject, int precision, double timeStep) {
 
         List<Dodger> listDodgerIteration = new ArrayList<>();
 
         for (Dodger dodger : listDodger) {
-            List<Dodger> listDodgerNextTimeStep = getNewListDodgerOfTimeStep(dodger, currentTime, listMobileObject, precision);
+            List<Dodger> listDodgerNextTimeStep = getNewListDodgerOfTimeStep(dodger, currentTime, listMobileObject, precision, timeStep);
             listDodgerIteration.addAll(listDodgerNextTimeStep);
         }
 
         return listDodgerIteration;
     }
 
-    private static <T extends MobileObject> List<Dodger> getNewListDodgerOfTimeStep(Dodger dodger, double currentTime, List<T> listMobileObject, int precision) {
+    private static <T extends MobileObject> List<Dodger> getNewListDodgerOfTimeStep(Dodger dodger, double currentTime, List<T> listMobileObject, int precision, double timeStep) {
 
         List<Dodger> listDodgerNextTimeStep = new ArrayList<>();
 
@@ -65,7 +63,7 @@ public class NoCollisionPathFinder {
 
             Dodger newDodger = dodger.cloneDodgerWithChangeDirection(currentTime, movement);
 
-            boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(dodger, listMobileObject, currentTime, currentTime + TIME_STEP, precision);
+            boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(dodger, listMobileObject, currentTime, currentTime + timeStep, precision);
 
             if (!isThereCollision) {
                 listDodgerNextTimeStep.add(newDodger);
