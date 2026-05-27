@@ -29,10 +29,10 @@ public class PixelCanvas extends JPanel {
         PixelCoordinates pixelCoordinates = transformCoordinates(upperLeftCorner);
         int px = pixelCoordinates.getX();
         int py = pixelCoordinates.getY();
-        int pradius = transformLength(radius);
+        int pdiameter = transformLength(2 * radius);
 
         g.setColor(color);
-        g.fillOval(px, py, pradius, pradius);
+        g.fillOval(px, py, pdiameter, pdiameter);
     }
 
     private int transformLength(double length) {
