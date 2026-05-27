@@ -8,6 +8,8 @@ import java.awt.*;
 
 public class DodgeAndInterceptorVisualizer {
 
+    private static final double TIME_DELTA = 0.05;
+
     private final PixelCanvas pixelCanvas;
 
     private final World world;
@@ -41,9 +43,31 @@ public class DodgeAndInterceptorVisualizer {
         }
 
         paintCanvas();
+        startSimulation();
     }
 
-    // FIXME init a thread that changes time and refreshes UI
+    private void startSimulation() {
+
+        Thread thread = new Thread(() -> {
+
+            boolean finished = false;
+            while(!finished) {
+                finished = simulationLoopReturnFinished();
+                refreshAll();
+            }
+        });
+
+        thread.start();
+    }
+
+    private boolean simulationLoopReturnFinished() {
+
+        time = time + TIME_DELTA;
+
+        // FIXME put intelligence of dodger here
+
+        return true;
+    }
 
     private void refreshAll() {
         paintCanvas();
