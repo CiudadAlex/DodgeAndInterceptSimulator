@@ -12,12 +12,16 @@ public class Player {
     private Dodger dodger;
     private Environment environment;
     private StoppedObject target;
+    private final double radiusDodger;
 
-    public Player(Dodger dodger, Environment environment, StoppedObject target) {
-        this.dodger = dodger;
+    public Player(Position initialPositionDodger, double radiusDodger, Environment environment, StoppedObject target) {
+        this.dodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
         this.environment = environment;
         this.target = target;
+        this.radiusDodger = radiusDodger;
     }
+
+    // FIXME finish
 
     private void calculateStrategy() {
 
