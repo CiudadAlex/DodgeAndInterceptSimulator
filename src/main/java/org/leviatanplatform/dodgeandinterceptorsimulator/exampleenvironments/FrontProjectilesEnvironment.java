@@ -10,9 +10,9 @@ public class FrontProjectilesEnvironment implements Environment {
     @Override
     public List<Projectile> getProjectiles() {
         return List.of(
-                buildProjectile(10,  1, -1, 0, 3),
-                buildProjectile(10,  0, -1, 0, 3),
-                buildProjectile(10, -1, -1, 0, 3)
+                buildProjectile(10,  3, -1, 0, 1),
+                buildProjectile(10,  0, -1, 0, 1),
+                buildProjectile(10, -3, -1, 0, 1)
         );
     }
 

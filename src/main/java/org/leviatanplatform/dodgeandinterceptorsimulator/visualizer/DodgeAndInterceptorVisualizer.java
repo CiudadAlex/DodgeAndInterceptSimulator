@@ -65,8 +65,13 @@ public class DodgeAndInterceptorVisualizer {
         time = time + TIME_DELTA;
 
         // FIXME put intelligence of dodger here
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-        return true;
+        return false;
     }
 
     private void refreshAll() {
@@ -90,7 +95,8 @@ public class DodgeAndInterceptorVisualizer {
 
     public void innerPaintCanvas() {
 
-        frame.setTitle("Dodge and Intercept simulator");
+        long timeLong = Math.round(100 * time);
+        frame.setTitle("Dodge and Intercept simulator. Time " + timeLong/100f);
 
         Dodger dodger = world.getDodger();
         Environment environment = world.getEnvironment();
