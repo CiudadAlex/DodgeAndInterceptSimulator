@@ -2,9 +2,11 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.visualizer;
 
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.World;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools.NoCollisionPathFinder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class DodgeAndInterceptorVisualizer {
 
@@ -63,6 +65,14 @@ public class DodgeAndInterceptorVisualizer {
     private boolean simulationLoopReturnFinished() {
 
         time = time + TIME_DELTA;
+
+        Dodger dodger = world.getDodger();
+        Position origin = dodger.getPosition(time);
+        double radius = dodger.getRadius();
+        List<Projectile> listMobileObject = world.getEnvironment().getProjectiles();
+        Position target = world.getTarget().getPosition(time);
+        int precision = 5;
+        List<Movement> listMovement = NoCollisionPathFinder.findNoCollisionPath(origin, radius, listMobileObject, target, precision);
 
         // FIXME put intelligence of dodger here
         sleep();
