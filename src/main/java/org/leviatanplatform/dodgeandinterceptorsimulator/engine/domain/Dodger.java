@@ -6,7 +6,6 @@ import java.util.List;
 public class Dodger extends Projectile {
 
     private static final double SQRT_2 = Math.sqrt(2);
-    private static final double VELOCITY_MODULE = 1;
 
     private double timeLastChange = 0;
     private List<Movement> listMovement = new ArrayList<>();
@@ -24,17 +23,17 @@ public class Dodger extends Projectile {
         return super.getPosition(time - timeLastChange);
     }
 
-    public void changeDirection(double time, Movement movement) {
+    public void changeDirection(double time, Movement movement, double velocityModule) {
 
         initialPosition = getPosition(time);
-        velocity = calculateVelocity(movement, VELOCITY_MODULE);
+        velocity = calculateVelocity(movement, velocityModule);
         timeLastChange = time;
         listMovement.add(movement);
     }
 
-    public Dodger cloneDodgerWithChangeDirection(double time, Movement movement) {
+    public Dodger cloneDodgerWithChangeDirection(double time, Movement movement, double velocityModule) {
         Dodger newDodger = new Dodger(initialPosition, velocity, radius, listMovement);
-        newDodger.changeDirection(time, movement);
+        newDodger.changeDirection(time, movement, velocityModule);
         return newDodger;
     }
 

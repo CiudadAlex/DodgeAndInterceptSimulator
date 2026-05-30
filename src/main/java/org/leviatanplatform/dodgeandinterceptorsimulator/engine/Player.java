@@ -7,33 +7,39 @@ import java.util.List;
 
 public class Player {
 
+    private static final double VELOCITY_DODGER_MODULE = 1;
     private static final double TIME_STEP = 1;
-
-    private Dodger dodger;
-    private Environment environment;
-    private StoppedObject target;
+    private final Environment environment;
+    private final StoppedObject target;
     private final double radiusDodger;
 
+    private final List<Movement> listMovement;
+    private Dodger currentDodger;
+
     public Player(Position initialPositionDodger, double radiusDodger, Environment environment, StoppedObject target) {
-        this.dodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
         this.environment = environment;
         this.target = target;
         this.radiusDodger = radiusDodger;
+        this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger);
+
+        this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
     }
 
     // FIXME finish
 
-    private void calculateStrategy() {
+    private List<Movement> calculateStrategy(Position initialPositionDodger, double radiusDodger) {
 
-        Position positionOrigin = dodger.getPosition(0);
-        double radius = dodger.getRadius();
         List<Projectile> listMobileObject = environment.getProjectiles();
         Position positionTarget = target.getPosition(0);
         int precision = 5;
-        List<Movement> listMovement = NoCollisionPathFinder.findNoCollisionPath(positionOrigin, radius, listMobileObject, positionTarget, precision, TIME_STEP);
+        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, listMobileObject, positionTarget, precision, TIME_STEP, VELOCITY_DODGER_MODULE);
     }
 
-    public Dodger getDodger() {
+    public Dodger getCurrentDodger(double time) {
+
+        int timeIndex = (int) Math.round(time / TIME_STEP);
+
+        Dodger dodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
         return dodger;
     }
 
