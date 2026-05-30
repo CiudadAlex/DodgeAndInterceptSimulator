@@ -22,11 +22,14 @@ public class Velocity {
     }
 
     public Position getFinalPosition(Position initialPosition, double timeInterval) {
-        // FIXME acabar
-        double x0 = initialPosition.getX();
-        double y0 = initialPosition.getX();
 
-        return new Position(vx, vy);
+        double x0 = initialPosition.getX();
+        double y0 = initialPosition.getY();
+
+        double x = x0 + vx * timeInterval;
+        double y = y0 + vy * timeInterval;
+
+        return new Position(x, y);
     }
 
     public static Velocity calculateVelocity(Movement movement, double velocityModule) {
