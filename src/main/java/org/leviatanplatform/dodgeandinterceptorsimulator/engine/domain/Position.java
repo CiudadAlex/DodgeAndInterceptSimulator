@@ -34,4 +34,9 @@ public class Position implements PositionInfo {
     public PositionInfo clonePositionInfo() {
         return new Position(x, y);
     }
+
+    @Override
+    public String toString() {
+        return "( " + x + " , " + y + " )";
+    }
 }
