@@ -15,6 +15,7 @@ public class Player {
 
     private final List<Movement> listMovement;
     private Dodger currentDodger;
+    private int currentTimeIndex;
 
     public Player(Position initialPositionDodger, double radiusDodger, Environment environment, StoppedObject target) {
         this.environment = environment;
@@ -23,10 +24,8 @@ public class Player {
         this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger);
 
         this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
-        int currentTimeIndex = 0;
+        this.currentTimeIndex = -1;
     }
-
-    // FIXME finish
 
     private List<Movement> calculateStrategy(Position initialPositionDodger, double radiusDodger) {
 
@@ -36,20 +35,35 @@ public class Player {
         return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, listMobileObject, positionTarget, precision, TIME_STEP, VELOCITY_DODGER_MODULE);
     }
 
-    public Dodger getCurrentDodger(double time) {
+    public Dodger getDodger(double time) {
 
         int timeIndex = (int) Math.floor(time / TIME_STEP);
 
-        if (timeIndex >= listMovement.size() ) {
+        if (timeIndex >= listMovement.size()) {
             return null;
         }
+
+        if (timeIndex == this.currentTimeIndex) {
+            return currentDodger;
+        }
+
+        if (timeIndex == this.currentTimeIndex + 1) {
+
+            Position currentPosition = currentDodger.getPosition(time);
+            this.currentDodger = buildFollowingDodger(timeIndex, currentPosition);
+            this.currentTimeIndex = timeIndex;
+            return this.currentDodger;
+        }
+
+        throw new RuntimeException("Expected timeIndex = " + this.currentTimeIndex + 1 + " but found " + timeIndex);
+    }
+
+    private Dodger buildFollowingDodger(int timeIndex, Position currentPosition) {
 
         Movement movement = listMovement.get(timeIndex);
         Velocity velocity = Velocity.calculateVelocity(movement, VELOCITY_DODGER_MODULE);
 
-        // FIXME finish: currentDodger, currentTimeIndex
-
-        return new Dodger(initialPositionDodger, velocity, radiusDodger);
+        return new Dodger(currentPosition, velocity, radiusDodger);
     }
 
     public Environment getEnvironment() {

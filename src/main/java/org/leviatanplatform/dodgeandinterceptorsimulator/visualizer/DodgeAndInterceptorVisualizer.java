@@ -101,7 +101,7 @@ public class DodgeAndInterceptorVisualizer {
         long timeLong = Math.round(100 * time);
         frame.setTitle("Dodge and Intercept simulator. Time " + timeLong/100f);
 
-        Dodger dodger = player.getDodger();
+        Dodger dodger = player.getDodger(time);
         Environment environment = player.getEnvironment();
         StoppedObject target = player.getTarget();
 
