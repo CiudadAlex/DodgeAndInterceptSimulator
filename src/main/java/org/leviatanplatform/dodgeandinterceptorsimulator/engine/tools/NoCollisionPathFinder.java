@@ -32,8 +32,19 @@ public class NoCollisionPathFinder {
 
     private static void printStatistics(List<Dodger> listDodgerIteration, Position target) {
 
-        if (listDodgerIteration.size() == 0) {
+        DistanceStatistics distanceStatistics = getDistanceStatistics(listDodgerIteration, target);
+
+        if (distanceStatistics == null) {
             return;
+        }
+
+        System.out.println("Number of dodgers: " + listDodgerIteration.size() + "  |  maxDistance: " + distanceStatistics.getMaxDistance() + "  |  minDistance: " + distanceStatistics.getMinDistance());
+    }
+
+    private static DistanceStatistics getDistanceStatistics(List<Dodger> listDodgerIteration, Position target) {
+
+        if (listDodgerIteration.size() == 0) {
+            return null;
         }
 
         double maxDistance = Double.NEGATIVE_INFINITY;
@@ -53,7 +64,7 @@ public class NoCollisionPathFinder {
             }
         }
 
-        System.out.println("Number of dodgers: " + listDodgerIteration.size() + "  |  maxDistance: " + maxDistance + "  |  minDistance: " + minDistance);
+        return new DistanceStatistics(maxDistance, minDistance);
     }
 
     private static Dodger getDodgerThatHitsTheTarget(List<Dodger> listDodger, StoppedObject stoppedTarget, double currentTime, int precision, double timeStep) {
