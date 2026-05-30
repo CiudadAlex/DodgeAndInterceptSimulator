@@ -23,35 +23,6 @@ public class Position implements PositionInfo {
         return y;
     }
 
-    public void move(Movement movement) {
-        move(movement, 1);
-    }
-
-    public void move(Movement movement, double numberToAdd) {
-        switch (movement) {
-            case UP -> y = y + numberToAdd;
-            case UP_RIGHT -> {
-                x = x + SQRT_2 * numberToAdd;
-                y = y + SQRT_2 * numberToAdd;
-            }
-            case RIGHT -> x = x + numberToAdd;
-            case DOWN_RIGHT -> {
-                x = x + SQRT_2 * numberToAdd;
-                y = y - SQRT_2 * numberToAdd;
-            }
-            case DOWN -> y = y - numberToAdd;
-            case DOWN_LEFT -> {
-                x = x - SQRT_2 * numberToAdd;
-                y = y - SQRT_2 * numberToAdd;
-            }
-            case LEFT -> x = x - numberToAdd;
-            case UP_LEFT -> {
-                x = x - SQRT_2 * numberToAdd;
-                y = y + SQRT_2 * numberToAdd;
-            }
-        }
-    }
-
     public Position cloneAdding(double addToX, double addToY) {
         return new Position(x + addToX, y + addToY);
     }
