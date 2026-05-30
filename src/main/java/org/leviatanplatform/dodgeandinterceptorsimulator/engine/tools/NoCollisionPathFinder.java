@@ -17,6 +17,7 @@ public class NoCollisionPathFinder {
         while (true) {
 
             List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(listDodgerLastIteration, currentTime, listMobileObject, precision, timeStepDodger, velocityModule);
+            System.out.println("Number of dodgers: " + listDodgerIteration.size());
 
             Dodger dodgerInTarget = getDodgerThatHitsTheTarget(listDodgerIteration, stoppedTarget, currentTime, precision, timeStepDodger);
 
