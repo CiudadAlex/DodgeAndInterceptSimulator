@@ -16,7 +16,7 @@ public class Main {
         int h = 800;
         int pixelScale = 5;
         int radius = 3;
-        double securityMargin = 3;
+        double securityMargin = 10;
         double visualizerTimeDelta = 0.01;
         int visualizerSleepMillis = 10;
         double velocityDodgerModule = 1;
@@ -36,7 +36,7 @@ public class Main {
 
     private static Environment getEnvironment() {
         Environment nothingEnvironment = new NothingEnvironment();
-        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment();
+        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(3);
         return frontProjectilesEnvironment;
     }
 }
