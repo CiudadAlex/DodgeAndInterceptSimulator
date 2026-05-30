@@ -5,20 +5,20 @@ import java.util.List;
 
 public class Dodger extends Projectile {
 
+    private final Position finalPosition;
+    private final double timeInterval;
+    private final List<Movement> listMovement;
+
     private double timeLastChange = 0;
-    // FIXME finish finalPosition
-    private Position finalPosition;
-    private double timeInterval;
-    private List<Movement> listMovement = new ArrayList<>();
 
     public Dodger(Position initialPosition, Velocity velocity, double radius, double timeInterval) {
-        super(initialPosition, velocity, radius);
-        this.timeInterval = timeInterval;
+        this(initialPosition, velocity, radius, timeInterval, new ArrayList<>());
     }
 
     public Dodger(Position initialPosition, Velocity velocity, double radius, double timeInterval, List<Movement> listMovement) {
         super(initialPosition, velocity, radius);
         this.timeInterval = timeInterval;
+        this.finalPosition = velocity.getFinalPosition(initialPosition, timeInterval);
         this.listMovement = new ArrayList<>(listMovement);
     }
 
