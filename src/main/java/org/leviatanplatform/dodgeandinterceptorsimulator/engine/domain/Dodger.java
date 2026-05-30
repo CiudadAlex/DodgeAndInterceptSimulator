@@ -3,44 +3,80 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dodger extends Projectile {
+public class Dodger implements MobileObject {
 
-    private final Position finalPosition;
-    private final double timeInterval;
-    private final List<MovementAndTime> listMovementAndTime;
+    private final Position positionAtTimeZero;
+    private final List<DodgerSegment> listDodgerSegment;
+    private final double radius;
+    private final double segmentTime;
 
-    private double timeLastChange = 0;
-
-    public Dodger(Position initialPosition, Velocity velocity, double radius, double timeInterval) {
-        this(initialPosition, velocity, radius, timeInterval, new ArrayList<>());
+    public Dodger(Position positionAtTimeZero, double radius, double segmentTime, List<DodgerSegment> listDodgerSegment) {
+        this.positionAtTimeZero = positionAtTimeZero;
+        this.radius = radius;
+        this.segmentTime = segmentTime;
+        this.listDodgerSegment = new ArrayList<>(listDodgerSegment);
     }
 
-    public Dodger(Position initialPosition, Velocity velocity, double radius, double timeInterval, List<MovementAndTime> listMovementAndTime) {
-        super(initialPosition, velocity, radius);
-        this.timeInterval = timeInterval;
-        this.finalPosition = velocity.getFinalPosition(initialPosition, timeInterval);
-        this.listMovementAndTime = new ArrayList<>(listMovementAndTime);
+    @Override
+    public double getRadius() {
+        return radius;
     }
 
+    @Override
     public Position getPosition(double time) {
-        return super.getPosition(time - timeLastChange);
+
+        DodgerSegment dodgerSegment = getDodgerSegment(time);
+
+        if (dodgerSegment != null) {
+            return dodgerSegment.getPosition(time);
+        }
+
+        return positionAtTimeZero;
+    }
+
+    public DodgerSegment getDodgerSegment(double time) {
+
+        for (DodgerSegment dodgerSegment : listDodgerSegment) {
+            if (time > dodgerSegment.getInitialTime() && time < dodgerSegment.getFinalTime()) {
+                return dodgerSegment;
+            }
+        }
+
+        return null;
+    }
+
+    private DodgerSegment getLastDodgerSegment() {
+
+        int indexLast = listDodgerSegment.size() - 1;
+        if (indexLast == -1) {
+            return null;
+        }
+
+        return listDodgerSegment.get(indexLast);
     }
 
     public void changeDirection(double time, Movement movement, double velocityModule) {
 
-        initialPosition = getPosition(time);
-        velocity = Velocity.calculateVelocity(movement, velocityModule);
-        timeLastChange = time;
-        listMovementAndTime.add(new MovementAndTime(movement, time));
+        DodgerSegment dodgerSegment = getLastDodgerSegment();
+        Position initialPosition;
+
+        if (dodgerSegment == null) {
+            initialPosition = positionAtTimeZero;
+        } else {
+            initialPosition = dodgerSegment.getPosition(time);
+        }
+
+        Velocity velocity = Velocity.calculateVelocity(movement, velocityModule);
+        listDodgerSegment.add(new DodgerSegment(initialPosition, time, velocity, radius, movement, segmentTime));
     }
 
-    public Dodger cloneDodgerWithChangeDirection(double time, Movement movement, double velocityModule, double timeInterval) {
-        Dodger newDodger = new Dodger(initialPosition, velocity, radius, timeInterval, listMovementAndTime);
+    public Dodger cloneDodgerWithChangeDirection(double time, Movement movement, double velocityModule, double timeStepDodger) {
+        Dodger newDodger = new Dodger(positionAtTimeZero, radius, timeStepDodger, listDodgerSegment);
         newDodger.changeDirection(time, movement, velocityModule);
         return newDodger;
     }
 
-    public List<MovementAndTime> getListMovementAndTime() {
-        return listMovementAndTime;
+    public List<DodgerSegment> getListMovementAndTime() {
+        return listDodgerSegment;
     }
 }

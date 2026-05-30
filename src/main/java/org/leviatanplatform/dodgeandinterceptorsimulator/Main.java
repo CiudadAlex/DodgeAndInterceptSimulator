@@ -39,7 +39,7 @@ public class Main {
 
     private static Environment getEnvironment() {
         Environment nothingEnvironment = new NothingEnvironment();
-        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(3);
-        return frontProjectilesEnvironment;
+        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(1);
+        return nothingEnvironment;
     }
 }

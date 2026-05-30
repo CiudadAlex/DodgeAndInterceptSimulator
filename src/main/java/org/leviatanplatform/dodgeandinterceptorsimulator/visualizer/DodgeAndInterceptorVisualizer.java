@@ -93,9 +93,9 @@ public class DodgeAndInterceptorVisualizer {
 
     public void innerPaintCanvas() {
 
-        Dodger dodger = player.getDodger(time);
+        DodgerSegment dodgerSegment = player.getDodgerSegment(time);
 
-        if (dodger == null) {
+        if (dodgerSegment == null) {
             frame.setTitle("STOP !!!!");
             return;
         }
@@ -108,7 +108,7 @@ public class DodgeAndInterceptorVisualizer {
         Environment environment = player.getEnvironment();
         StoppedObject target = player.getTarget();
 
-        paintMobileObject(dodger, Color.GREEN, time);
+        paintMobileObject(dodgerSegment, Color.GREEN, time);
 
         for (Projectile projectile : environment.getProjectiles()) {
             paintMobileObject(projectile, Color.YELLOW, time);

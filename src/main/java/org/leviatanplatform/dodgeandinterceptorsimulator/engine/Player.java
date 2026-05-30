@@ -8,67 +8,31 @@ import java.util.List;
 public class Player {
     private final Environment environment;
     private final StoppedObject target;
-    private final double radiusDodger;
     private final double velocityDodgerModule;
     private final double timeStepDodger;
     private final int collisionPrecision;
-
-    private final List<MovementAndTime> lisMovementAndTime;
-    private Dodger currentDodger;
-    private int currentTimeIndex;
+    private Dodger dodger;
 
     public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target, double velocityDodgerModule, double timeStepDodger, int collisionPrecision) {
         this.environment = environment;
         this.target = target;
-        this.radiusDodger = radiusDodger;
         this.velocityDodgerModule = velocityDodgerModule;
         this.timeStepDodger = timeStepDodger;
         this.collisionPrecision = collisionPrecision;
-        this.lisMovementAndTime = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
 
-        this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger, timeStepDodger);
-        this.currentTimeIndex = -1;
+        List<DodgerSegment> listDodgerSegment = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
+        this.dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, listDodgerSegment);
     }
 
-    private List<MovementAndTime> calculateStrategy(Position initialPositionDodger, double radiusDodger, double securityMargin) {
+    private List<DodgerSegment> calculateStrategy(Position initialPositionDodger, double radiusDodger, double securityMargin) {
 
         List<Projectile> listMobileObject = environment.getProjectiles();
         Position positionTarget = target.getPosition(0);
         return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, securityMargin, listMobileObject, positionTarget, collisionPrecision, timeStepDodger, velocityDodgerModule);
     }
 
-    public Dodger getDodger(double time) {
-
-        int timeIndex = (int) Math.floor(time / timeStepDodger);
-
-        if (timeIndex >= lisMovementAndTime.size()) {
-            return null;
-        }
-
-        if (timeIndex == this.currentTimeIndex) {
-            return currentDodger;
-        }
-
-        if (timeIndex == this.currentTimeIndex + 1) {
-
-            Position currentPosition = currentDodger.getPosition(time);
-            this.currentDodger = buildFollowingDodger(timeIndex, currentPosition);
-            this.currentTimeIndex = timeIndex;
-            return this.currentDodger;
-        }
-
-        throw new RuntimeException("Expected timeIndex = " + this.currentTimeIndex + 1 + " but found " + timeIndex);
-    }
-
-    private Dodger buildFollowingDodger(int timeIndex, Position currentPosition) {
-
-        // FIXME finish time
-
-        MovementAndTime movementAndTime = lisMovementAndTime.get(timeIndex);
-        Movement movement = movementAndTime.getMovement();
-        Velocity velocity = Velocity.calculateVelocity(movement, velocityDodgerModule);
-
-        return new Dodger(currentPosition, velocity, radiusDodger, timeStepDodger);
+    public DodgerSegment getDodgerSegment(double time) {
+        return dodger.getDodgerSegment(time);
     }
 
     public Environment getEnvironment() {

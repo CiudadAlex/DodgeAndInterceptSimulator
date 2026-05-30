@@ -28,6 +28,10 @@ public class DodgerSegment implements MobileObject {
         return initialTime;
     }
 
+    public double getFinalTime() {
+        return initialTime + segmentTime;
+    }
+
     public Velocity getVelocity() {
         return velocity;
     }
