@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Dodger extends Projectile {
 
-    private static final double SQRT_2 = Math.sqrt(2);
-
     private double timeLastChange = 0;
     private List<Movement> listMovement = new ArrayList<>();
 
@@ -26,7 +24,7 @@ public class Dodger extends Projectile {
     public void changeDirection(double time, Movement movement, double velocityModule) {
 
         initialPosition = getPosition(time);
-        velocity = calculateVelocity(movement, velocityModule);
+        velocity = Velocity.calculateVelocity(movement, velocityModule);
         timeLastChange = time;
         listMovement.add(movement);
     }
@@ -35,37 +33,6 @@ public class Dodger extends Projectile {
         Dodger newDodger = new Dodger(initialPosition, velocity, radius, listMovement);
         newDodger.changeDirection(time, movement, velocityModule);
         return newDodger;
-    }
-
-    private Velocity calculateVelocity(Movement movement, double velocityModule) {
-
-        double vx = 0;
-        double vy = 0;
-
-        switch (movement) {
-            case UP -> vy = velocityModule;
-            case UP_RIGHT -> {
-                vx = SQRT_2 * velocityModule;
-                vy = SQRT_2 * velocityModule;
-            }
-            case RIGHT -> vx = velocityModule;
-            case DOWN_RIGHT -> {
-                vx = SQRT_2 * velocityModule;
-                vy = - SQRT_2 * velocityModule;
-            }
-            case DOWN -> vy = - velocityModule;
-            case DOWN_LEFT -> {
-                vx = - SQRT_2 * velocityModule;
-                vy = - SQRT_2 * velocityModule;
-            }
-            case LEFT -> vx = - velocityModule;
-            case UP_LEFT -> {
-                vx = - SQRT_2 * velocityModule;
-                vy = SQRT_2 * velocityModule;
-            }
-        }
-
-        return new Velocity(vx, vy);
     }
 
     public List<Movement> getListMovement() {

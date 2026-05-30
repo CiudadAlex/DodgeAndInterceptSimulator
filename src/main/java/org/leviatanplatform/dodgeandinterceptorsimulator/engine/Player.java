@@ -23,6 +23,7 @@ public class Player {
         this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger);
 
         this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
+        int currentTimeIndex = 0;
     }
 
     // FIXME finish
@@ -37,10 +38,18 @@ public class Player {
 
     public Dodger getCurrentDodger(double time) {
 
-        int timeIndex = (int) Math.round(time / TIME_STEP);
+        int timeIndex = (int) Math.floor(time / TIME_STEP);
 
-        Dodger dodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
-        return dodger;
+        if (timeIndex >= listMovement.size() ) {
+            return null;
+        }
+
+        Movement movement = listMovement.get(timeIndex);
+        Velocity velocity = Velocity.calculateVelocity(movement, VELOCITY_DODGER_MODULE);
+
+        // FIXME finish: currentDodger, currentTimeIndex
+
+        return new Dodger(initialPositionDodger, velocity, radiusDodger);
     }
 
     public Environment getEnvironment() {
