@@ -13,7 +13,7 @@ public class Player {
     private final double timeStepDodger;
     private final int collisionPrecision;
 
-    private final List<Movement> listMovement;
+    private final List<MovementAndTime> lisMovementAndTime;
     private Dodger currentDodger;
     private int currentTimeIndex;
 
@@ -24,13 +24,13 @@ public class Player {
         this.velocityDodgerModule = velocityDodgerModule;
         this.timeStepDodger = timeStepDodger;
         this.collisionPrecision = collisionPrecision;
-        this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
+        this.lisMovementAndTime = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
 
         this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger, timeStepDodger);
         this.currentTimeIndex = -1;
     }
 
-    private List<Movement> calculateStrategy(Position initialPositionDodger, double radiusDodger, double securityMargin) {
+    private List<MovementAndTime> calculateStrategy(Position initialPositionDodger, double radiusDodger, double securityMargin) {
 
         List<Projectile> listMobileObject = environment.getProjectiles();
         Position positionTarget = target.getPosition(0);
@@ -41,7 +41,7 @@ public class Player {
 
         int timeIndex = (int) Math.floor(time / timeStepDodger);
 
-        if (timeIndex >= listMovement.size()) {
+        if (timeIndex >= lisMovementAndTime.size()) {
             return null;
         }
 
@@ -62,7 +62,10 @@ public class Player {
 
     private Dodger buildFollowingDodger(int timeIndex, Position currentPosition) {
 
-        Movement movement = listMovement.get(timeIndex);
+        // FIXME finish time
+
+        MovementAndTime movementAndTime = lisMovementAndTime.get(timeIndex);
+        Movement movement = movementAndTime.getMovement();
         Velocity velocity = Velocity.calculateVelocity(movement, velocityDodgerModule);
 
         return new Dodger(currentPosition, velocity, radiusDodger, timeStepDodger);

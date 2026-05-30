@@ -7,7 +7,7 @@ import java.util.List;
 
 public class NoCollisionPathFinder {
 
-    public static <T extends MobileObject> List<Movement> findNoCollisionPath(Position origin, double radius, double securityMargin, List<T> listMobileObject, Position target, int precision, double timeStepDodger, double velocityModule) {
+    public static <T extends MobileObject> List<MovementAndTime> findNoCollisionPath(Position origin, double radius, double securityMargin, List<T> listMobileObject, Position target, int precision, double timeStepDodger, double velocityModule) {
 
         Dodger dodger = new Dodger(origin.clonePosition(), Velocity.ZERO, radius + securityMargin, timeStepDodger);
         List<Dodger> listDodgerLastIteration = List.of(dodger);
@@ -21,7 +21,7 @@ public class NoCollisionPathFinder {
             Dodger dodgerInTarget = getDodgerThatHitsTheTarget(listDodgerIteration, stoppedTarget, currentTime, precision, timeStepDodger);
 
             if (dodgerInTarget != null) {
-                return dodgerInTarget.getListMovement();
+                return dodgerInTarget.getListMovementAndTime();
             }
 
             listDodgerLastIteration = listDodgerIteration;
