@@ -11,17 +11,19 @@ public class Player {
     private final double radiusDodger;
     private final double velocityDodgerModule;
     private final double timeStepDodger;
+    private final int collisionPrecision;
 
     private final List<Movement> listMovement;
     private Dodger currentDodger;
     private int currentTimeIndex;
 
-    public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target, double velocityDodgerModule, double timeStepDodger) {
+    public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target, double velocityDodgerModule, double timeStepDodger, int collisionPrecision) {
         this.environment = environment;
         this.target = target;
         this.radiusDodger = radiusDodger;
         this.velocityDodgerModule = velocityDodgerModule;
         this.timeStepDodger = timeStepDodger;
+        this.collisionPrecision = collisionPrecision;
         this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
 
         this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
@@ -32,8 +34,7 @@ public class Player {
 
         List<Projectile> listMobileObject = environment.getProjectiles();
         Position positionTarget = target.getPosition(0);
-        int precision = 5;
-        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, securityMargin, listMobileObject, positionTarget, precision, timeStepDodger, velocityDodgerModule);
+        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, securityMargin, listMobileObject, positionTarget, collisionPrecision, timeStepDodger, velocityDodgerModule);
     }
 
     public Dodger getDodger(double time) {
