@@ -17,22 +17,22 @@ public class Player {
     private Dodger currentDodger;
     private int currentTimeIndex;
 
-    public Player(Position initialPositionDodger, double radiusDodger, Environment environment, StoppedObject target) {
+    public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target) {
         this.environment = environment;
         this.target = target;
         this.radiusDodger = radiusDodger;
-        this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger);
+        this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
 
         this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
         this.currentTimeIndex = -1;
     }
 
-    private List<Movement> calculateStrategy(Position initialPositionDodger, double radiusDodger) {
+    private List<Movement> calculateStrategy(Position initialPositionDodger, double radiusDodger, double securityMargin) {
 
         List<Projectile> listMobileObject = environment.getProjectiles();
         Position positionTarget = target.getPosition(0);
         int precision = 5;
-        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, listMobileObject, positionTarget, precision, TIME_STEP, VELOCITY_DODGER_MODULE);
+        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, securityMargin, listMobileObject, positionTarget, precision, TIME_STEP, VELOCITY_DODGER_MODULE);
     }
 
     public Dodger getDodger(double time) {

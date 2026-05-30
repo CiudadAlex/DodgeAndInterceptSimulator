@@ -2,15 +2,13 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.visualizer;
 
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.Player;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools.NoCollisionPathFinder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class DodgeAndInterceptorVisualizer {
 
-    private static final double TIME_DELTA = 0.2;
+    private static final double TIME_DELTA = 0.05;
 
     private final PixelCanvas pixelCanvas;
 
@@ -65,10 +63,6 @@ public class DodgeAndInterceptorVisualizer {
     private boolean simulationLoopReturnFinished() {
 
         time = time + TIME_DELTA;
-
-
-
-        // FIXME put intelligence of dodger here
         sleep();
 
         return false;
@@ -76,7 +70,7 @@ public class DodgeAndInterceptorVisualizer {
 
     private static void sleep() {
         try {
-            Thread.sleep(200);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
