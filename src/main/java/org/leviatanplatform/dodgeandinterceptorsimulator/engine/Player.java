@@ -6,21 +6,22 @@ import org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools.NoCollisio
 import java.util.List;
 
 public class Player {
-
-    private static final double VELOCITY_DODGER_MODULE = 1;
-    private static final double TIME_STEP = 1;
     private final Environment environment;
     private final StoppedObject target;
     private final double radiusDodger;
+    private final double velocityDodgerModule;
+    private final double timeStepDodger;
 
     private final List<Movement> listMovement;
     private Dodger currentDodger;
     private int currentTimeIndex;
 
-    public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target) {
+    public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target, double velocityDodgerModule, double timeStepDodger) {
         this.environment = environment;
         this.target = target;
         this.radiusDodger = radiusDodger;
+        this.velocityDodgerModule = velocityDodgerModule;
+        this.timeStepDodger = timeStepDodger;
         this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
 
         this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
@@ -32,12 +33,12 @@ public class Player {
         List<Projectile> listMobileObject = environment.getProjectiles();
         Position positionTarget = target.getPosition(0);
         int precision = 5;
-        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, securityMargin, listMobileObject, positionTarget, precision, TIME_STEP, VELOCITY_DODGER_MODULE);
+        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, securityMargin, listMobileObject, positionTarget, precision, timeStepDodger, velocityDodgerModule);
     }
 
     public Dodger getDodger(double time) {
 
-        int timeIndex = (int) Math.floor(time / TIME_STEP);
+        int timeIndex = (int) Math.floor(time / timeStepDodger);
 
         if (timeIndex >= listMovement.size()) {
             return null;
@@ -61,7 +62,7 @@ public class Player {
     private Dodger buildFollowingDodger(int timeIndex, Position currentPosition) {
 
         Movement movement = listMovement.get(timeIndex);
-        Velocity velocity = Velocity.calculateVelocity(movement, VELOCITY_DODGER_MODULE);
+        Velocity velocity = Velocity.calculateVelocity(movement, velocityDodgerModule);
 
         return new Dodger(currentPosition, velocity, radiusDodger);
     }
