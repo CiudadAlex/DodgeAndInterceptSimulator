@@ -88,7 +88,6 @@ public class DodgeAndInterceptorVisualizer {
 
     public void paintCanvas() {
         SwingUtilities.invokeLater(() -> {
-            pixelCanvas.reset();
             innerPaintCanvas();
             pixelCanvas.invalidate();
             pixelCanvas.validate();
@@ -98,10 +97,18 @@ public class DodgeAndInterceptorVisualizer {
 
     public void innerPaintCanvas() {
 
+        Dodger dodger = player.getDodger(time);
+
+        if (dodger == null) {
+            frame.setTitle("STOP !!!!");
+            return;
+        }
+
         long timeLong = Math.round(100 * time);
         frame.setTitle("Dodge and Intercept simulator. Time " + timeLong/100f);
 
-        Dodger dodger = player.getDodger(time);
+        pixelCanvas.reset();
+
         Environment environment = player.getEnvironment();
         StoppedObject target = player.getTarget();
 
