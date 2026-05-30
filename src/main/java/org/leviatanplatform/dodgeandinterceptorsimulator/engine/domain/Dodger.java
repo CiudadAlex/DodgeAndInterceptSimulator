@@ -6,6 +6,8 @@ import java.util.List;
 public class Dodger extends Projectile {
 
     private double timeLastChange = 0;
+    // FIXME finish finalPosition
+    private Position finalPosition;
     private List<Movement> listMovement = new ArrayList<>();
 
     public Dodger(Position initialPosition, Velocity velocity, double radius) {

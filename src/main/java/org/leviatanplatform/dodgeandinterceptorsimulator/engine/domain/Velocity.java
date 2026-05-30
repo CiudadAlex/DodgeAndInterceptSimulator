@@ -29,23 +29,23 @@ public class Velocity {
         switch (movement) {
             case UP -> vy = velocityModule;
             case UP_RIGHT -> {
-                vx = SQRT_2 * velocityModule;
-                vy = SQRT_2 * velocityModule;
+                vx = velocityModule / SQRT_2;
+                vy = velocityModule / SQRT_2;
             }
             case RIGHT -> vx = velocityModule;
             case DOWN_RIGHT -> {
-                vx = SQRT_2 * velocityModule;
-                vy = - SQRT_2 * velocityModule;
+                vx = velocityModule / SQRT_2;
+                vy = - velocityModule / SQRT_2;
             }
             case DOWN -> vy = - velocityModule;
             case DOWN_LEFT -> {
-                vx = - SQRT_2 * velocityModule;
-                vy = - SQRT_2 * velocityModule;
+                vx = - velocityModule / SQRT_2;
+                vy = - velocityModule / SQRT_2;
             }
             case LEFT -> vx = - velocityModule;
             case UP_LEFT -> {
-                vx = - SQRT_2 * velocityModule;
-                vy = SQRT_2 * velocityModule;
+                vx = - velocityModule / SQRT_2;
+                vy = velocityModule / SQRT_2;
             }
         }
 
