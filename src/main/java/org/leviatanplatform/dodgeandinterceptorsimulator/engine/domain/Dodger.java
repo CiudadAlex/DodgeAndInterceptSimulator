@@ -8,14 +8,17 @@ public class Dodger extends Projectile {
     private double timeLastChange = 0;
     // FIXME finish finalPosition
     private Position finalPosition;
+    private double timeInterval;
     private List<Movement> listMovement = new ArrayList<>();
 
-    public Dodger(Position initialPosition, Velocity velocity, double radius) {
+    public Dodger(Position initialPosition, Velocity velocity, double radius, double timeInterval) {
         super(initialPosition, velocity, radius);
+        this.timeInterval = timeInterval;
     }
 
-    public Dodger(Position initialPosition, Velocity velocity, double radius, List<Movement> listMovement) {
+    public Dodger(Position initialPosition, Velocity velocity, double radius, double timeInterval, List<Movement> listMovement) {
         super(initialPosition, velocity, radius);
+        this.timeInterval = timeInterval;
         this.listMovement = new ArrayList<>(listMovement);
     }
 
@@ -31,8 +34,8 @@ public class Dodger extends Projectile {
         listMovement.add(movement);
     }
 
-    public Dodger cloneDodgerWithChangeDirection(double time, Movement movement, double velocityModule) {
-        Dodger newDodger = new Dodger(initialPosition, velocity, radius, listMovement);
+    public Dodger cloneDodgerWithChangeDirection(double time, Movement movement, double velocityModule, double timeInterval) {
+        Dodger newDodger = new Dodger(initialPosition, velocity, radius, timeInterval, listMovement);
         newDodger.changeDirection(time, movement, velocityModule);
         return newDodger;
     }

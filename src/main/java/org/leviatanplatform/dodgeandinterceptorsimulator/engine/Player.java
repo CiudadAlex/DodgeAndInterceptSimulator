@@ -26,7 +26,7 @@ public class Player {
         this.collisionPrecision = collisionPrecision;
         this.listMovement = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
 
-        this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger);
+        this.currentDodger = new Dodger(initialPositionDodger, Velocity.ZERO, radiusDodger, timeStepDodger);
         this.currentTimeIndex = -1;
     }
 
@@ -65,7 +65,7 @@ public class Player {
         Movement movement = listMovement.get(timeIndex);
         Velocity velocity = Velocity.calculateVelocity(movement, velocityDodgerModule);
 
-        return new Dodger(currentPosition, velocity, radiusDodger);
+        return new Dodger(currentPosition, velocity, radiusDodger, timeStepDodger);
     }
 
     public Environment getEnvironment() {

@@ -7,25 +7,25 @@ import java.util.List;
 
 public class NoCollisionPathFinder {
 
-    public static <T extends MobileObject> List<Movement> findNoCollisionPath(Position origin, double radius, double securityMargin, List<T> listMobileObject, Position target, int precision, double timeStep, double velocityModule) {
+    public static <T extends MobileObject> List<Movement> findNoCollisionPath(Position origin, double radius, double securityMargin, List<T> listMobileObject, Position target, int precision, double timeStepDodger, double velocityModule) {
 
-        Dodger dodger = new Dodger(origin.clonePosition(), Velocity.ZERO, radius + securityMargin);
+        Dodger dodger = new Dodger(origin.clonePosition(), Velocity.ZERO, radius + securityMargin, timeStepDodger);
         List<Dodger> listDodgerLastIteration = List.of(dodger);
         StoppedObject stoppedTarget = new StoppedObject(target, 0);
         double currentTime = 0;
 
         while (true) {
 
-            List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(listDodgerLastIteration, currentTime, listMobileObject, precision, timeStep, velocityModule);
+            List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(listDodgerLastIteration, currentTime, listMobileObject, precision, timeStepDodger, velocityModule);
 
-            Dodger dodgerInTarget = getDodgerThatHitsTheTarget(listDodgerIteration, stoppedTarget, currentTime, precision, timeStep);
+            Dodger dodgerInTarget = getDodgerThatHitsTheTarget(listDodgerIteration, stoppedTarget, currentTime, precision, timeStepDodger);
 
             if (dodgerInTarget != null) {
                 return dodgerInTarget.getListMovement();
             }
 
             listDodgerLastIteration = listDodgerIteration;
-            currentTime = currentTime + timeStep;
+            currentTime = currentTime + timeStepDodger;
         }
     }
 
@@ -43,27 +43,27 @@ public class NoCollisionPathFinder {
         return null;
     }
 
-    private static <T extends MobileObject> List<Dodger> getNewListDodgerOfTimeStep(List<Dodger> listDodger, double currentTime, List<T> listMobileObject, int precision, double timeStep, double velocityModule) {
+    private static <T extends MobileObject> List<Dodger> getNewListDodgerOfTimeStep(List<Dodger> listDodger, double currentTime, List<T> listMobileObject, int precision, double timeStepDodger, double velocityModule) {
 
         List<Dodger> listDodgerIteration = new ArrayList<>();
 
         for (Dodger dodger : listDodger) {
-            List<Dodger> listDodgerNextTimeStep = getNewListDodgerOfTimeStep(dodger, currentTime, listMobileObject, precision, timeStep, velocityModule);
+            List<Dodger> listDodgerNextTimeStep = getNewListDodgerOfTimeStep(dodger, currentTime, listMobileObject, precision, timeStepDodger, velocityModule);
             listDodgerIteration.addAll(listDodgerNextTimeStep);
         }
 
         return listDodgerIteration;
     }
 
-    private static <T extends MobileObject> List<Dodger> getNewListDodgerOfTimeStep(Dodger dodger, double currentTime, List<T> listMobileObject, int precision, double timeStep, double velocityModule) {
+    private static <T extends MobileObject> List<Dodger> getNewListDodgerOfTimeStep(Dodger dodger, double currentTime, List<T> listMobileObject, int precision, double timeStepDodger, double velocityModule) {
 
         List<Dodger> listDodgerNextTimeStep = new ArrayList<>();
 
         for (Movement movement : Movement.values()) {
 
-            Dodger newDodger = dodger.cloneDodgerWithChangeDirection(currentTime, movement, velocityModule);
+            Dodger newDodger = dodger.cloneDodgerWithChangeDirection(currentTime, movement, velocityModule, timeStepDodger);
 
-            boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(dodger, listMobileObject, currentTime, currentTime + timeStep, precision);
+            boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(dodger, listMobileObject, currentTime, currentTime + timeStepDodger, precision);
 
             if (!isThereCollision) {
                 listDodgerNextTimeStep.add(newDodger);
