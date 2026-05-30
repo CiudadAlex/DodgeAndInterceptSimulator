@@ -12,6 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // FIXME contabilidad de caminos y purga de los mas lejanos
+        // FIXME movimiento a saltos
+
         int w = 1000;
         int h = 800;
         int pixelScale = 5;
