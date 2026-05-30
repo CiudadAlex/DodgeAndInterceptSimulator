@@ -5,20 +5,20 @@ public class Velocity {
     public static final Velocity ZERO = new Velocity(0, 0);
     private static final double SQRT_2 = Math.sqrt(2);
 
-    private final double x;
-    private final double y;
+    private final double vx;
+    private final double vy;
 
-    public Velocity(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public Velocity(double vx, double vy) {
+        this.vx = vx;
+        this.vy = vy;
     }
 
-    public double getX() {
-        return x;
+    public double getVx() {
+        return vx;
     }
 
-    public double getY() {
-        return y;
+    public double getVy() {
+        return vy;
     }
 
     public Position getFinalPosition(Position initialPosition, double timeInterval) {
@@ -26,7 +26,7 @@ public class Velocity {
         double x0 = initialPosition.getX();
         double y0 = initialPosition.getX();
 
-        return new Position(x, y);
+        return new Position(vx, vy);
     }
 
     public static Velocity calculateVelocity(Movement movement, double velocityModule) {

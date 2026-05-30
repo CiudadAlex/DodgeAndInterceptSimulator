@@ -29,8 +29,8 @@ public class Projectile implements MobileObject {
         double x0 = initialPosition.getX();
         double y0 = initialPosition.getY();
 
-        double vx = velocity.getX();
-        double vy = velocity.getY();
+        double vx = velocity.getVx();
+        double vy = velocity.getVy();
 
         double x = x0 + vx * time;
         double y = y0 + vy * time;
