@@ -8,22 +8,24 @@ import java.awt.*;
 
 public class DodgeAndInterceptorVisualizer {
 
-    private static final double TIME_DELTA = 0.05;
-
     private final PixelCanvas pixelCanvas;
 
     private final Player player;
     private double time = 0;
     private final int w;
     private final int h;
+    private final double timeDelta;
+    private final int sleepMillis;
     private int millisWaitBetweenMovements = 500;
     private JFrame frame;
 
-    public DodgeAndInterceptorVisualizer(Player player, int w, int h, int pixelScale) {
+    public DodgeAndInterceptorVisualizer(Player player, int w, int h, int pixelScale, double timeDelta, int sleepMillis) {
 
         this.player = player;
         this.w = w;
         this.h = h;
+        this.timeDelta = timeDelta;
+        this.sleepMillis = sleepMillis;
 
         this.pixelCanvas = new PixelCanvas(w, h, pixelScale);
     }
@@ -62,15 +64,15 @@ public class DodgeAndInterceptorVisualizer {
 
     private boolean simulationLoopReturnFinished() {
 
-        time = time + TIME_DELTA;
+        time = time + timeDelta;
         sleep();
 
         return false;
     }
 
-    private static void sleep() {
+    private void sleep() {
         try {
-            Thread.sleep(50);
+            Thread.sleep(sleepMillis);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
