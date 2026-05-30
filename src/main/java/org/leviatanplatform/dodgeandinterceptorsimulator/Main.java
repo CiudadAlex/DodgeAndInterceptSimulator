@@ -17,10 +17,10 @@ public class Main {
         int pixelScale = 5;
         int radius = 3;
 
-        Dodger dodger = new Dodger(new Position(-11, 0), Velocity.ZERO, radius);
+        Position initialPositionDodger = new Position(-11, 0);
         Environment env = getEnvironment();
         StoppedObject target = new StoppedObject(new Position(11, 0), radius);
-        Player player = new Player(dodger, env, target);
+        Player player = new Player(initialPositionDodger, radius, env, target);
 
         SwingUtilities.invokeLater(() -> {
             DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(player, w, h, pixelScale);
