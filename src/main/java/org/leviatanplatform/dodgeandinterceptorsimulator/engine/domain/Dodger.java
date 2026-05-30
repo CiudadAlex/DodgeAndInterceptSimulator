@@ -45,7 +45,7 @@ public class Dodger implements MobileObject {
         return null;
     }
 
-    private DodgerSegment getLastDodgerSegment() {
+    public DodgerSegment getLastDodgerSegment() {
 
         int indexLast = listDodgerSegment.size() - 1;
         if (indexLast == -1) {
@@ -76,7 +76,7 @@ public class Dodger implements MobileObject {
         return newDodger;
     }
 
-    public List<DodgerSegment> getListMovementAndTime() {
+    public List<DodgerSegment> getListDodgerSegment() {
         return listDodgerSegment;
     }
 }

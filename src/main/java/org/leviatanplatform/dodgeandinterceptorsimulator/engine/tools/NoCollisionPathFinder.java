@@ -17,17 +17,43 @@ public class NoCollisionPathFinder {
         while (true) {
 
             List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(listDodgerLastIteration, currentTime, listMobileObject, precision, timeStepDodger, velocityModule);
-            System.out.println("Number of dodgers: " + listDodgerIteration.size());
+            printStatistics(listDodgerIteration, target);
 
             Dodger dodgerInTarget = getDodgerThatHitsTheTarget(listDodgerIteration, stoppedTarget, currentTime, precision, timeStepDodger);
 
             if (dodgerInTarget != null) {
-                return dodgerInTarget.getListMovementAndTime();
+                return dodgerInTarget.getListDodgerSegment();
             }
 
             listDodgerLastIteration = listDodgerIteration;
             currentTime = currentTime + timeStepDodger;
         }
+    }
+
+    private static void printStatistics(List<Dodger> listDodgerIteration, Position target) {
+
+        if (listDodgerIteration.size() == 0) {
+            return;
+        }
+
+        double maxDistance = Double.NEGATIVE_INFINITY;
+        double minDistance = Double.POSITIVE_INFINITY;
+
+        for (Dodger dodger : listDodgerIteration) {
+            DodgerSegment dodgerSegment = dodger.getLastDodgerSegment();
+            Position finalPosition = dodgerSegment.getFinalPosition();
+            double distance = MobileObjectCollisionDetector.calculateDistance(finalPosition, target);
+
+            if (distance > maxDistance) {
+                maxDistance = distance;
+            }
+
+            if (distance < minDistance) {
+                minDistance = distance;
+            }
+        }
+
+        System.out.println("Number of dodgers: " + listDodgerIteration.size() + "  |  maxDistance: " + maxDistance + "  |  minDistance: " + minDistance);
     }
 
     private static Dodger getDodgerThatHitsTheTarget(List<Dodger> listDodger, StoppedObject stoppedTarget, double currentTime, int precision, double timeStep) {
