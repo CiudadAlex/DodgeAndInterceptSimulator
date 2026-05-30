@@ -12,14 +12,6 @@ public class Projectile implements MobileObject {
         this.radius = radius;
     }
 
-    public Position getInitialPosition() {
-        return initialPosition;
-    }
-
-    public Velocity getVelocity() {
-        return velocity;
-    }
-
     public double getRadius() {
         return radius;
     }
