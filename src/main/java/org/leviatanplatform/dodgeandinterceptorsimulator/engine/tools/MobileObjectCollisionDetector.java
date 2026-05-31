@@ -28,9 +28,7 @@ public class MobileObjectCollisionDetector {
 
         for (int i = 0; i <= precision; i++) {
             double time = timeInitial + i * timeStep;
-            Position position1 = mobileObject1.getPosition(time);
-            Position position2 = mobileObject2.getPosition(time);
-            double distance = calculateDistance(position1, position2);
+            double distance = calculateDistance(mobileObject1, mobileObject2, time);
 
             if (distance < sumRadius) {
                 return true;
@@ -38,6 +36,12 @@ public class MobileObjectCollisionDetector {
         }
 
         return false;
+    }
+
+    public static double calculateDistance(MobileObject mobileObject1, MobileObject mobileObject2, double time) {
+        Position position1 = mobileObject1.getPosition(time);
+        Position position2 = mobileObject2.getPosition(time);
+        return calculateDistance(position1, position2);
     }
 
     public static double calculateDistance(Position position1, Position position2) {
