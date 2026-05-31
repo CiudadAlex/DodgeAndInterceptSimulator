@@ -25,7 +25,7 @@ public class FrontProjectilesEnvironment implements Environment {
 
         List<Projectile> listProjectile = new ArrayList<>();
 
-        double verticalDisplacement = (numProjectiles - 1) / 2.0;
+        double verticalDisplacement = verticalSeparation * (numProjectiles - 1) / 2.0;
 
         for (int i = 0; i < numProjectiles; i++) {
             listProjectile.add(buildProjectile(initialX,  i * verticalSeparation - verticalDisplacement, -moduleVelocity, 0, 1));
