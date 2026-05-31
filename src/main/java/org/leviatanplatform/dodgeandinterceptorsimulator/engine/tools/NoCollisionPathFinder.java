@@ -41,6 +41,28 @@ public class NoCollisionPathFinder {
         System.out.println("Number of dodgers: " + listDodgerIteration.size() + "  |  maxDistance: " + distanceStatistics.getMaxDistance() + "  |  minDistance: " + distanceStatistics.getMinDistance());
     }
 
+    // FIXME contabilidad de caminos y purga de los mas lejanos
+
+    private static List<Dodger> filterListDodger(List<Dodger> listDodgerIteration, Position target, int maxProcessableDodgers) {
+
+        List<Dodger> listDodgerFiltered = new ArrayList<>(listDodgerIteration);
+
+        while (listDodgerFiltered.size() > maxProcessableDodgers) {
+
+            DistanceStatistics distanceStatistics = getDistanceStatistics(listDodgerFiltered, target);
+            double meanDistance = distanceStatistics.getMeanDistance();
+            listDodgerFiltered = listDodgerFiltered.stream().filter(dodger -> getDistance(dodger, target) < meanDistance).toList();
+        }
+
+        return listDodgerFiltered;
+    }
+
+    private static double getDistance(Dodger dodger, Position target) {
+        DodgerSegment dodgerSegment = dodger.getLastDodgerSegment();
+        Position finalPosition = dodgerSegment.getFinalPosition();
+        return MobileObjectCollisionDetector.calculateDistance(finalPosition, target);
+    }
+
     private static DistanceStatistics getDistanceStatistics(List<Dodger> listDodgerIteration, Position target) {
 
         if (listDodgerIteration.size() == 0) {
@@ -51,9 +73,7 @@ public class NoCollisionPathFinder {
         double minDistance = Double.POSITIVE_INFINITY;
 
         for (Dodger dodger : listDodgerIteration) {
-            DodgerSegment dodgerSegment = dodger.getLastDodgerSegment();
-            Position finalPosition = dodgerSegment.getFinalPosition();
-            double distance = MobileObjectCollisionDetector.calculateDistance(finalPosition, target);
+            double distance = getDistance(dodger, target);
 
             if (distance > maxDistance) {
                 maxDistance = distance;
