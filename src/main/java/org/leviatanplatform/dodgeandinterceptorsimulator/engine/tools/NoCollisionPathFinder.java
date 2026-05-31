@@ -14,7 +14,7 @@ public class NoCollisionPathFinder {
         StoppedObject stoppedTarget = new StoppedObject(target, 0);
         double currentTime = 0;
 
-        while (true) {
+        while (!listDodgerLastIteration.isEmpty()) {
 
             List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(listDodgerLastIteration, currentTime, listMobileObject, precision, timeStepDodger, velocityModule);
             listDodgerIteration = filterListDodger(listDodgerIteration, target, maxProcessableDodgers);
@@ -29,6 +29,8 @@ public class NoCollisionPathFinder {
             listDodgerLastIteration = listDodgerIteration;
             currentTime = currentTime + timeStepDodger;
         }
+
+        throw new RuntimeException("No path found");
     }
 
     private static void printStatistics(List<Dodger> listDodgerIteration, Position target) {
