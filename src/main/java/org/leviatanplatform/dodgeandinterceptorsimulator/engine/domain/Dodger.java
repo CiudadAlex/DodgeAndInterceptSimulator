@@ -37,7 +37,7 @@ public class Dodger implements MobileObject {
     public DodgerSegment getDodgerSegment(double time) {
 
         for (DodgerSegment dodgerSegment : listDodgerSegment) {
-            if (time > dodgerSegment.getInitialTime() && time < dodgerSegment.getFinalTime()) {
+            if (time >= dodgerSegment.getInitialTime() && time <= dodgerSegment.getFinalTime()) {
                 return dodgerSegment;
             }
         }
