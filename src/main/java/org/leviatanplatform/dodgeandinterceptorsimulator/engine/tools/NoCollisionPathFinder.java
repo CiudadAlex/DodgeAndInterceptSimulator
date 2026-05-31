@@ -7,7 +7,7 @@ import java.util.List;
 
 public class NoCollisionPathFinder {
 
-    public static <T extends MobileObject> List<DodgerSegment> findNoCollisionPath(Position origin, double radius, double securityMargin, List<T> listMobileObject, Position target, int precision, double timeStepDodger, double velocityModule) {
+    public static <T extends MobileObject> List<DodgerSegment> findNoCollisionPath(Position origin, double radius, double securityMargin, List<T> listMobileObject, Position target, int precision, double timeStepDodger, double velocityModule, int maxProcessableDodgers) {
 
         Dodger dodger = new Dodger(origin.clonePosition(), radius + securityMargin, timeStepDodger, new ArrayList<>());
         List<Dodger> listDodgerLastIteration = List.of(dodger);
@@ -17,6 +17,7 @@ public class NoCollisionPathFinder {
         while (true) {
 
             List<Dodger> listDodgerIteration = getNewListDodgerOfTimeStep(listDodgerLastIteration, currentTime, listMobileObject, precision, timeStepDodger, velocityModule);
+            listDodgerIteration = filterListDodger(listDodgerIteration, target, maxProcessableDodgers);
             printStatistics(listDodgerIteration, target);
 
             Dodger dodgerInTarget = getDodgerThatHitsTheTarget(listDodgerIteration, stoppedTarget, currentTime, precision, timeStepDodger);
@@ -40,8 +41,6 @@ public class NoCollisionPathFinder {
 
         System.out.println("Number of dodgers: " + listDodgerIteration.size() + "  |  maxDistance: " + distanceStatistics.getMaxDistance() + "  |  minDistance: " + distanceStatistics.getMinDistance());
     }
-
-    // FIXME contabilidad de caminos y purga de los mas lejanos
 
     private static List<Dodger> filterListDodger(List<Dodger> listDodgerIteration, Position target, int maxProcessableDodgers) {
 

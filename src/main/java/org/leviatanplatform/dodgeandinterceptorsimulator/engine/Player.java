@@ -13,22 +13,22 @@ public class Player {
     private final int collisionPrecision;
     private Dodger dodger;
 
-    public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target, double velocityDodgerModule, double timeStepDodger, int collisionPrecision) {
+    public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target, double velocityDodgerModule, double timeStepDodger, int collisionPrecision, int maxProcessableDodgers) {
         this.environment = environment;
         this.target = target;
         this.velocityDodgerModule = velocityDodgerModule;
         this.timeStepDodger = timeStepDodger;
         this.collisionPrecision = collisionPrecision;
 
-        List<DodgerSegment> listDodgerSegment = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin);
+        List<DodgerSegment> listDodgerSegment = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin, maxProcessableDodgers);
         this.dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, listDodgerSegment);
     }
 
-    private List<DodgerSegment> calculateStrategy(Position initialPositionDodger, double radiusDodger, double securityMargin) {
+    private List<DodgerSegment> calculateStrategy(Position initialPositionDodger, double radiusDodger, double securityMargin, int maxProcessableDodgers) {
 
         List<Projectile> listMobileObject = environment.getProjectiles();
         Position positionTarget = target.getPosition(0);
-        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, securityMargin, listMobileObject, positionTarget, collisionPrecision, timeStepDodger, velocityDodgerModule);
+        return NoCollisionPathFinder.findNoCollisionPath(initialPositionDodger, radiusDodger, securityMargin, listMobileObject, positionTarget, collisionPrecision, timeStepDodger, velocityDodgerModule, maxProcessableDodgers);
     }
 
     public DodgerSegment getDodgerSegment(double time) {

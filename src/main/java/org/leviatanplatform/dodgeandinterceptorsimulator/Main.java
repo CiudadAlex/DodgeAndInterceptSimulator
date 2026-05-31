@@ -10,6 +10,8 @@ import javax.swing.*;
 
 public class Main {
 
+    // FIXME test contabilidad de caminos y purga de los mas lejanos
+
     public static void main(String[] args) {
 
         int w = 1000;
@@ -22,11 +24,12 @@ public class Main {
         double velocityDodgerModule = 1;
         double timeStepDodger = 1;
         int collisionPrecision = 20;
+        int maxProcessableDodgers = 1000;
 
         Position initialPositionDodger = new Position(-4, 0);
         Environment env = getEnvironment();
         StoppedObject target = new StoppedObject(new Position(4, 0), radius);
-        Player player = new Player(initialPositionDodger, radius, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision);
+        Player player = new Player(initialPositionDodger, radius, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers);
 
         SwingUtilities.invokeLater(() -> {
             DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(player, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);
