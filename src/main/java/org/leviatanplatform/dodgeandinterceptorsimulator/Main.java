@@ -16,7 +16,7 @@ public class Main {
 
         int w = 1000;
         int h = 800;
-        int pixelScale = 5;
+        int pixelScale = 10;
         int radius = 1;
         double securityMargin = 0;
         double visualizerTimeDelta = 0.01;
@@ -24,7 +24,7 @@ public class Main {
         double velocityDodgerModule = 1;
         double timeStepDodger = 1;
         int collisionPrecision = 20;
-        int maxProcessableDodgers = 1000;
+        int maxProcessableDodgers = 10000;
 
         Position initialPositionDodger = new Position(-4, 0);
         Environment env = getEnvironment();
@@ -39,7 +39,7 @@ public class Main {
 
     private static Environment getEnvironment() {
         Environment nothingEnvironment = new NothingEnvironment();
-        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(1);
-        return nothingEnvironment;
+        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(1, 10, 3, 3);
+        return frontProjectilesEnvironment;
     }
 }
