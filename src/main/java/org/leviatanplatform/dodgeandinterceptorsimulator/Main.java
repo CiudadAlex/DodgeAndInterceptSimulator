@@ -8,6 +8,7 @@ import org.leviatanplatform.dodgeandinterceptorsimulator.visualizer.DodgeAndInte
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -24,7 +25,7 @@ public class Main {
         int radiusTarget = 1;
         double securityMargin = 0;
         double visualizerTimeDelta = 0.01;
-        int visualizerSleepMillis = 10;
+        int visualizerSleepMillis = 2;
         double velocityDodgerModule = 1;
         double timeStepDodger = 1;
         int collisionPrecision = 20;
@@ -44,16 +45,19 @@ public class Main {
 
     private static Player buildPlayerWithCustomStrategy(Environment env, StoppedObject target, Position initialPositionDodger, int radiusDodger, double timeStepDodger, double velocityDodgerModule) {
 
+        List<Movement> listMovement = List.of(
+                Movement.UP_RIGHT, Movement.UP_RIGHT, Movement.UP_RIGHT, Movement.UP_RIGHT,
+                Movement.RIGHT, Movement.RIGHT,
+                Movement.DOWN_RIGHT, Movement.DOWN_RIGHT, Movement.DOWN_RIGHT, Movement.DOWN_RIGHT
+        );
+
         Dodger dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, new ArrayList<>());
-        dodger.changeDirection(0, Movement.UP_RIGHT,velocityDodgerModule);
-        dodger.changeDirection(1, Movement.UP_RIGHT,velocityDodgerModule);
-        dodger.changeDirection(2, Movement.RIGHT,velocityDodgerModule);
-        dodger.changeDirection(3, Movement.RIGHT,velocityDodgerModule);
-        dodger.changeDirection(4, Movement.RIGHT,velocityDodgerModule);
-        dodger.changeDirection(5, Movement.RIGHT,velocityDodgerModule);
-        dodger.changeDirection(6, Movement.RIGHT,velocityDodgerModule);
-        dodger.changeDirection(7, Movement.DOWN_RIGHT,velocityDodgerModule);
-        dodger.changeDirection(8, Movement.DOWN_RIGHT,velocityDodgerModule);
+        double time = 0;
+
+        for (Movement movement : listMovement) {
+            dodger.changeDirection(time, movement, velocityDodgerModule);
+            time++;
+        }
 
         Player player = new Player(env, target);
         player.setStrategy(dodger);
@@ -62,7 +66,7 @@ public class Main {
 
     private static Environment getEnvironment() {
         Environment nothingEnvironment = new NothingEnvironment();
-        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(1, 10, 3, 3);
+        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(1, 4, 3, 3);
         return frontProjectilesEnvironment;
     }
 }
