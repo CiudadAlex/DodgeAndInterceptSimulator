@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class Main {
 
-    // FIXME test contabilidad de caminos y purga de los mas lejanos
+    // FIXME test
 
     public static void main(String[] args) {
 
