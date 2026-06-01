@@ -46,9 +46,11 @@ public class Main {
     private static Player buildPlayerWithCustomStrategy(Environment env, StoppedObject target, Position initialPositionDodger, int radiusDodger, double timeStepDodger, double velocityDodgerModule) {
 
         List<Movement> listMovement = List.of(
+                Movement.UP, Movement.UP, Movement.UP, Movement.UP,
                 Movement.UP_RIGHT, Movement.UP_RIGHT, Movement.UP_RIGHT, Movement.UP_RIGHT,
                 Movement.RIGHT, Movement.RIGHT,
-                Movement.DOWN_RIGHT, Movement.DOWN_RIGHT, Movement.DOWN_RIGHT, Movement.DOWN_RIGHT
+                Movement.DOWN_RIGHT, Movement.DOWN_RIGHT, Movement.DOWN_RIGHT, Movement.DOWN_RIGHT,
+                Movement.DOWN, Movement.DOWN, Movement.DOWN, Movement.DOWN
         );
 
         Dodger dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, new ArrayList<>());
