@@ -16,7 +16,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        boolean autoCalculateStrategy = false;
+        boolean autoCalculateStrategy = true;
+        boolean limitMovementValues = true;
 
         int w = 1000;
         int h = 800;
@@ -30,6 +31,8 @@ public class Main {
         double timeStepDodger = 1;
         int collisionPrecision = 20;
         int maxProcessableDodgers = 10000;
+
+        Movement.setLimitValues(limitMovementValues);
 
         Position initialPositionDodger = new Position(-4, 0);
         Environment env = getEnvironment();
@@ -68,7 +71,7 @@ public class Main {
 
     private static Environment getEnvironment() {
         Environment nothingEnvironment = new NothingEnvironment();
-        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(1, 4, 3, 3);
+        Environment frontProjectilesEnvironment = new FrontProjectilesEnvironment(1, 4, 3, 1);
         return frontProjectilesEnvironment;
     }
 }

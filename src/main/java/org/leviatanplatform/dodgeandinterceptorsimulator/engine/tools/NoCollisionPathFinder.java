@@ -118,7 +118,7 @@ public class NoCollisionPathFinder {
 
         List<Dodger> listDodgerNextTimeStep = new ArrayList<>();
 
-        for (Movement movement : Movement.values()) {
+        for (Movement movement : Movement.getValues()) {
 
             Dodger newDodger = dodger.cloneDodgerWithChangeDirection(currentTime, movement, velocityModule);
 
