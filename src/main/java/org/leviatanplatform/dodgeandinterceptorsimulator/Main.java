@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Main {
 
-    // FIXME test
+    // FIXME shooter
 
     public static void main(String[] args) {
 
