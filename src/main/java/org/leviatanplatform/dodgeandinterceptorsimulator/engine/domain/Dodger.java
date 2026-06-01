@@ -70,8 +70,8 @@ public class Dodger implements MobileObject {
         listDodgerSegment.add(new DodgerSegment(initialPosition, time, velocity, radius, movement, segmentTime));
     }
 
-    public Dodger cloneDodgerWithChangeDirection(double time, Movement movement, double velocityModule, double timeStepDodger) {
-        Dodger newDodger = new Dodger(positionAtTimeZero, radius, timeStepDodger, listDodgerSegment);
+    public Dodger cloneDodgerWithChangeDirection(double time, Movement movement, double velocityModule) {
+        Dodger newDodger = new Dodger(positionAtTimeZero, radius, segmentTime, listDodgerSegment);
         newDodger.changeDirection(time, movement, velocityModule);
         return newDodger;
     }

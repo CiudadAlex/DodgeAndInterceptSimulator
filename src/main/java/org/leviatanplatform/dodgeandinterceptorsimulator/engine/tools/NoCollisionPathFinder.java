@@ -120,7 +120,7 @@ public class NoCollisionPathFinder {
 
         for (Movement movement : Movement.values()) {
 
-            Dodger newDodger = dodger.cloneDodgerWithChangeDirection(currentTime, movement, velocityModule, timeStepDodger);
+            Dodger newDodger = dodger.cloneDodgerWithChangeDirection(currentTime, movement, velocityModule);
 
             boolean isThereCollision = MobileObjectCollisionDetector.isThereCollision(newDodger, listMobileObject, currentTime, currentTime + timeStepDodger, precision);
 
