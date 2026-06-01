@@ -15,10 +15,13 @@ public class Main {
 
     public static void main(String[] args) {
 
+        boolean autoCalculateStrategy = false;
+
         int w = 1000;
         int h = 800;
         int pixelScale = 10;
-        int radius = 1;
+        int radiusDodger = 1;
+        int radiusTarget = 1;
         double securityMargin = 0;
         double visualizerTimeDelta = 0.01;
         int visualizerSleepMillis = 10;
@@ -29,8 +32,9 @@ public class Main {
 
         Position initialPositionDodger = new Position(-4, 0);
         Environment env = getEnvironment();
-        StoppedObject target = new StoppedObject(new Position(4, 0), radius);
-        Player player = new Player(initialPositionDodger, radius, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers);
+        StoppedObject target = new StoppedObject(new Position(4, 0), radiusTarget);
+        Player player = autoCalculateStrategy ? new Player(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
+                : buildPlayerWithCustomStrategy(env, target, initialPositionDodger, radiusDodger, timeStepDodger, velocityDodgerModule);
 
         SwingUtilities.invokeLater(() -> {
             DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(player, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);
@@ -38,7 +42,8 @@ public class Main {
         });
     }
 
-    private Dodger buildStrategy(Position initialPositionDodger, int radiusDodger, double timeStepDodger, double velocityDodgerModule) {
+    private static Player buildPlayerWithCustomStrategy(Environment env, StoppedObject target, Position initialPositionDodger, int radiusDodger, double timeStepDodger, double velocityDodgerModule) {
+
         Dodger dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, new ArrayList<>());
         dodger.changeDirection(0, Movement.UP_RIGHT,velocityDodgerModule);
         dodger.changeDirection(1, Movement.UP_RIGHT,velocityDodgerModule);
@@ -49,7 +54,10 @@ public class Main {
         dodger.changeDirection(6, Movement.RIGHT,velocityDodgerModule);
         dodger.changeDirection(7, Movement.DOWN_RIGHT,velocityDodgerModule);
         dodger.changeDirection(8, Movement.DOWN_RIGHT,velocityDodgerModule);
-        return dodger;
+
+        Player player = new Player(env, target);
+        player.setStrategy(dodger);
+        return player;
     }
 
     private static Environment getEnvironment() {

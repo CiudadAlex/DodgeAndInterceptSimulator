@@ -12,12 +12,20 @@ public class Player {
 
     public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target,
                   double velocityDodgerModule, double timeStepDodger, int collisionPrecision, int maxProcessableDodgers) {
-        this.environment = environment;
-        this.target = target;
+        this(environment, target);
 
         List<DodgerSegment> listDodgerSegment = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin, maxProcessableDodgers,
                 collisionPrecision, timeStepDodger, velocityDodgerModule);
         this.dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, listDodgerSegment);
+    }
+
+    public Player(Environment environment, StoppedObject target) {
+        this.environment = environment;
+        this.target = target;
+    }
+
+    public void setStrategy(Dodger dodger) {
+        this.dodger = dodger;
     }
 
     private List<DodgerSegment> calculateStrategy(Position initialPositionDodger, double radiusDodger, double securityMargin, int maxProcessableDodgers,
