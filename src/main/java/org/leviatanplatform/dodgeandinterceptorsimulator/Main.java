@@ -7,6 +7,7 @@ import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.Not
 import org.leviatanplatform.dodgeandinterceptorsimulator.visualizer.DodgeAndInterceptorVisualizer;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -35,6 +36,20 @@ public class Main {
             DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(player, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);
             visualizer.show();
         });
+    }
+
+    private Dodger buildStrategy(Position initialPositionDodger, int radiusDodger, double timeStepDodger, double velocityDodgerModule) {
+        Dodger dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, new ArrayList<>());
+        dodger.changeDirection(0, Movement.UP_RIGHT,velocityDodgerModule);
+        dodger.changeDirection(1, Movement.UP_RIGHT,velocityDodgerModule);
+        dodger.changeDirection(2, Movement.RIGHT,velocityDodgerModule);
+        dodger.changeDirection(3, Movement.RIGHT,velocityDodgerModule);
+        dodger.changeDirection(4, Movement.RIGHT,velocityDodgerModule);
+        dodger.changeDirection(5, Movement.RIGHT,velocityDodgerModule);
+        dodger.changeDirection(6, Movement.RIGHT,velocityDodgerModule);
+        dodger.changeDirection(7, Movement.DOWN_RIGHT,velocityDodgerModule);
+        dodger.changeDirection(8, Movement.DOWN_RIGHT,velocityDodgerModule);
+        return dodger;
     }
 
     private static Environment getEnvironment() {
