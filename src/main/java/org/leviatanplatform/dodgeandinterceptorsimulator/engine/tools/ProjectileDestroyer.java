@@ -18,6 +18,8 @@ public class ProjectileDestroyer {
 
         for (int i = 0; i <= SEARCH_GRANULARITY; i++) {
             double vx = - velocityModuleInterceptor + i * stepVelocity;
+            double result = functionToFindRootVx.apply(vx);
+            System.out.println(result);
         }
 
         return null;
