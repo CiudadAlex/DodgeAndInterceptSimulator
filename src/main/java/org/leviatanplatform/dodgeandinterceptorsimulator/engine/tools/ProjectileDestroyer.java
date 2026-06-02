@@ -8,9 +8,17 @@ import java.util.function.Function;
 
 public class ProjectileDestroyer {
 
+    private static final int SEARCH_GRANULARITY = 100;
+
     public Velocity calculateVelocityToInterceptProjectile(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
 
+        Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor);
 
+        double stepVelocity = 2 * velocityModuleInterceptor / SEARCH_GRANULARITY;
+
+        for (int i = 0; i <= SEARCH_GRANULARITY; i++) {
+            double vx = - velocityModuleInterceptor + i * stepVelocity;
+        }
 
         return null;
     }
