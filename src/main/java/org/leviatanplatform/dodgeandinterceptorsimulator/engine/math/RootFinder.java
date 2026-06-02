@@ -38,4 +38,6 @@ public class RootFinder {
 
         return null;
     }
+
+    // FIXME finish, external loop until maxDeviationFromZero is reached
 }

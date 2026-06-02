@@ -16,6 +16,8 @@ public class ProjectileDestroyer {
         Velocity velocityTarget = projectile.getVelocity();
         Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor);
 
+        // FIXME use RootFinder
+
         double stepVelocity = 2 * velocityModuleInterceptor / SEARCH_GRANULARITY;
 
         for (int i = 0; i <= SEARCH_GRANULARITY; i++) {
