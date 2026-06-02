@@ -16,6 +16,14 @@ public class Projectile implements MobileObject {
         return radius;
     }
 
+    public Position getInitialPosition() {
+        return initialPosition;
+    }
+
+    public Velocity getVelocity() {
+        return velocity;
+    }
+
     public Position getPosition(double time) {
         return velocity.getFinalPosition(initialPosition, time);
     }
