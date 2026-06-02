@@ -15,14 +15,27 @@ public class ProjectileDestroyer {
         return null;
     }
 
-    public Function<Double, Double> buildFunctionToFindRootVx(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
+    private Function<Double, Double> buildFunctionToFindRootVx(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
 
         Position positionTarget = projectile.getInitialPosition();
+        double xT = positionTarget.getX();
+        double yT = positionTarget.getY();
+        double xS = initialPositionInterceptor.getX();
+        double yS = initialPositionInterceptor.getY();
+
         Velocity velocityTarget = projectile.getVelocity();
+        double vxT = velocityTarget.getVx();
+        double vyT = velocityTarget.getVy();
 
-        double Aox = positionTarget.getX() - initialPositionInterceptor.getX();
-        double Aoy = positionTarget.getY() - initialPositionInterceptor.getY();
+        double Aox = xT - xS;
+        double Aoy = yT - yS;
 
-        return (vx) -> vx;
+        return (vxS) -> (vyT - getValueOtherComponent(velocityModuleInterceptor, vxS)) * Aox - (vxT - vxS) * Aoy;
+    }
+
+    private double getValueOtherComponent(double velocityModuleInterceptor, double vi) {
+        double vM2 = velocityModuleInterceptor * velocityModuleInterceptor;
+        double vi2 = vi * vi;
+        return Math.sqrt(vM2 - vi2);
     }
 }
