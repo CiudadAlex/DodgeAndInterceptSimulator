@@ -19,8 +19,7 @@ public class PlayerShooter implements Player {
 
     @Override
     public MobileObject getSelf(double time) {
-        // FIXME finish
-        return null;
+        return self;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator;
 
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.Player;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.PlayerDodger;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
 import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.FrontProjectilesEnvironment;
@@ -37,7 +38,7 @@ public class Main {
         Position initialPositionDodger = new Position(-4, 0);
         Environment env = getEnvironment();
         StoppedObject target = new StoppedObject(new Position(4, 0), radiusTarget);
-        PlayerDodger playerDodger = autoCalculateStrategy ? new PlayerDodger(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
+        Player playerDodger = autoCalculateStrategy ? new PlayerDodger(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
                 : buildPlayerWithCustomStrategy(env, target, initialPositionDodger, radiusDodger, timeStepDodger, velocityDodgerModule);
 
         SwingUtilities.invokeLater(() -> {
