@@ -8,8 +8,6 @@ import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.Not
 import org.leviatanplatform.dodgeandinterceptorsimulator.visualizer.DodgeAndInterceptorVisualizer;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
@@ -39,35 +37,12 @@ public class Main {
         Environment env = getEnvironment();
         StoppedObject target = new StoppedObject(new Position(4, 0), radiusTarget);
         Player player = autoCalculateStrategy ? new PlayerDodger(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
-                : buildPlayerWithCustomStrategy(env, target, initialPositionDodger, radiusDodger, timeStepDodger, velocityDodgerModule);
+                : PlayerBuilder.buildPlayerDodgerWithCustomStrategy(env, target, initialPositionDodger, radiusDodger, timeStepDodger, velocityDodgerModule);
 
         SwingUtilities.invokeLater(() -> {
             DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(player, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);
             visualizer.show();
         });
-    }
-
-    private static PlayerDodger buildPlayerWithCustomStrategy(Environment env, StoppedObject target, Position initialPositionDodger, int radiusDodger, double timeStepDodger, double velocityDodgerModule) {
-
-        List<Movement> listMovement = List.of(
-                Movement.UP, Movement.UP, Movement.UP, Movement.UP,
-                Movement.UP_RIGHT, Movement.UP_RIGHT, Movement.UP_RIGHT, Movement.UP_RIGHT,
-                Movement.RIGHT, Movement.RIGHT,
-                Movement.DOWN_RIGHT, Movement.DOWN_RIGHT, Movement.DOWN_RIGHT, Movement.DOWN_RIGHT,
-                Movement.DOWN, Movement.DOWN, Movement.DOWN, Movement.DOWN
-        );
-
-        Dodger dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, new ArrayList<>());
-        double time = 0;
-
-        for (Movement movement : listMovement) {
-            dodger.changeDirection(time, movement, velocityDodgerModule);
-            time++;
-        }
-
-        PlayerDodger playerDodger = new PlayerDodger(env, target);
-        playerDodger.setStrategy(dodger);
-        return playerDodger;
     }
 
     private static Environment getEnvironment() {
