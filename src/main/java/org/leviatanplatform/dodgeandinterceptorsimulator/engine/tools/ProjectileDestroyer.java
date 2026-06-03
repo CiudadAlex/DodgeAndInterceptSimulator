@@ -3,6 +3,8 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Position;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Projectile;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Velocity;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.math.RootFinder;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.math.model.Range;
 
 import java.util.function.Function;
 
@@ -17,6 +19,7 @@ public class ProjectileDestroyer {
         Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor);
 
         // FIXME use RootFinder
+        // RootFinder.findRootValueForX(Function<Double, Double> function, Range rangeX, int searchGranularity, Function<Double, Boolean> acceptableX, double maxYDeviationFromZero)
 
         double stepVelocity = 2 * velocityModuleInterceptor / SEARCH_GRANULARITY;
 
