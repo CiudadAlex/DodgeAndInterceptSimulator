@@ -11,26 +11,39 @@ import java.util.function.Function;
 public class ProjectileDestroyer {
 
     private static final int SEARCH_GRANULARITY = 100;
+    private static final double MAX_ROOT_DEVIATION_FROM_ZERO = 0.00000001;
 
     public static Velocity calculateVelocityToInterceptProjectile(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
 
         Position positionTarget = projectile.getInitialPosition();
         Velocity velocityTarget = projectile.getVelocity();
         Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor);
+        Function<Double, Boolean> acceptableVx = buildFunctionAcceptableVx(initialPositionInterceptor, positionTarget, velocityTarget);
+        Range rangeX = new Range(-velocityModuleInterceptor, velocityModuleInterceptor);
 
-        // FIXME use RootFinder
-        // RootFinder.findRootValueForX(Function<Double, Double> function, Range rangeX, int searchGranularity, Function<Double, Boolean> acceptableX, double maxYDeviationFromZero)
+        Double rootVx = RootFinder.findRootValueForX(functionToFindRootVx, rangeX, SEARCH_GRANULARITY, acceptableVx, MAX_ROOT_DEVIATION_FROM_ZERO);
 
-        double stepVelocity = 2 * velocityModuleInterceptor / SEARCH_GRANULARITY;
-
-        for (int i = 0; i <= SEARCH_GRANULARITY; i++) {
-            double vxS = - velocityModuleInterceptor + i * stepVelocity;
-            double result = functionToFindRootVx.apply(vxS);
-            double time = getTime(initialPositionInterceptor, positionTarget, vxS, velocityTarget);
-            System.out.println(result + "    " + time);
+        if (rootVx == null) {
+            return null;
         }
 
-        return null;
+        // FIXME review vy sign
+        double vy = getValueOtherVelocityComponent(velocityModuleInterceptor, rootVx);
+
+        return new Velocity(rootVx, vy);
+    }
+
+    private static Function<Double, Boolean> buildFunctionAcceptableVx(Position initialPositionInterceptor, Position positionTarget, Velocity velocityTarget) {
+
+        return (vxS) -> {
+            double time = getTime(initialPositionInterceptor, positionTarget, vxS, velocityTarget);
+
+            if (time < 0 || time == Double.POSITIVE_INFINITY || Double.isNaN(time)) {
+                return false;
+            }
+
+            return true;
+        };
     }
 
     private static Function<Double, Double> buildFunctionToFindRootVx(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
