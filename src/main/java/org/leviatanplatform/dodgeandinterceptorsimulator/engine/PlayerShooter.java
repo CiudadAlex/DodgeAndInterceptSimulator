@@ -1,6 +1,7 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.engine;
 
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools.ProjectileDestroyer;
 
 import java.util.List;
 
@@ -11,17 +12,17 @@ public class PlayerShooter implements Player {
     private final StoppedObject target;
     private final List<Projectile> shoots;
 
-
-    public PlayerShooter(StoppedObject self, Environment environment, StoppedObject target) {
+    public PlayerShooter(StoppedObject self, Environment environment, StoppedObject target, double velocityShootModule, double radiusShoot) {
         this.self = self;
         this.environment = environment;
         this.target = target;
-        this.shoots = calculateShots();
+        this.shoots = calculateShots(velocityShootModule, radiusShoot);
     }
 
-    private List<Projectile> calculateShots() {
-        // FIXME finish
-        return List.of();
+    private List<Projectile> calculateShots(double velocityShootModule, double radiusShoot) {
+        Position initialPositionInterceptor = self.getPosition(0);
+        List<Projectile> listProjectile = environment.getProjectiles();
+        return ProjectileDestroyer.calculateProjectileToInterceptProjectile(listProjectile, velocityShootModule, initialPositionInterceptor, radiusShoot);
     }
 
     @Override

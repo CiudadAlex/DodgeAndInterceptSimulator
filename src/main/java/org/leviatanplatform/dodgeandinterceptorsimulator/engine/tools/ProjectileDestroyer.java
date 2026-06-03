@@ -6,6 +6,8 @@ import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.Velocity;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.math.RootFinder;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.math.model.Range;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 public class ProjectileDestroyer {
@@ -13,7 +15,25 @@ public class ProjectileDestroyer {
     private static final int SEARCH_GRANULARITY = 100;
     private static final double MAX_ROOT_DEVIATION_FROM_ZERO = 0.00000001;
 
-    public static Velocity calculateVelocityToInterceptProjectile(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
+    public static List<Projectile> calculateProjectileToInterceptProjectile(List<Projectile> listProjectile, double velocityModuleInterceptor, Position initialPositionInterceptor, double radiusInterceptor) {
+        return listProjectile.stream()
+                .map(projectile -> calculateProjectileToInterceptProjectile(projectile, velocityModuleInterceptor, initialPositionInterceptor, radiusInterceptor))
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
+    public static Projectile calculateProjectileToInterceptProjectile(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor, double radiusInterceptor) {
+
+        Velocity velocity = calculateVelocityToInterceptProjectile(projectile, velocityModuleInterceptor, initialPositionInterceptor);
+
+        if (velocity == null) {
+            return null;
+        }
+
+        return new Projectile(initialPositionInterceptor, velocity, radiusInterceptor);
+    }
+
+    private static Velocity calculateVelocityToInterceptProjectile(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
 
         Position positionTarget = projectile.getInitialPosition();
         Velocity velocityTarget = projectile.getVelocity();
