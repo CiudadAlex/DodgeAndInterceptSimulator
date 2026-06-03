@@ -101,16 +101,16 @@ public class DodgeAndInterceptorVisualizer {
             return;
         }
 
+        pixelCanvas.reset();
+
+        long timeLong = Math.round(100 * time);
+        frame.setTitle("Dodge and Intercept simulator. Time " + timeLong/100f);
+
         List<Projectile> shoots = player.getShoots();
 
         for (Projectile projectile : shoots) {
             paintMobileObject(projectile, Color.WHITE, time);
         }
-
-        long timeLong = Math.round(100 * time);
-        frame.setTitle("Dodge and Intercept simulator. Time " + timeLong/100f);
-
-        pixelCanvas.reset();
 
         Environment environment = player.getEnvironment();
         StoppedObject target = player.getTarget();
