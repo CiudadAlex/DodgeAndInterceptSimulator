@@ -1,7 +1,6 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator;
 
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.Player;
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.PlayerDodger;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
 import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.FrontProjectilesEnvironment;
 import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.NothingEnvironment;
@@ -11,7 +10,7 @@ import javax.swing.*;
 
 public class Main {
 
-    // FIXME shooter
+    // FIXME test shooter
 
     public static void main(String[] args) {
 
@@ -30,14 +29,16 @@ public class Main {
         double timeStepDodger = 1;
         int collisionPrecision = 20;
         int maxProcessableDodgers = 10000;
+        double velocityShootModule = 1;
+        double radiusShoot = 1;
 
         Movement.setLimitValues(limitMovementValues);
 
         Position initialPositionDodger = new Position(-4, 0);
         Environment env = getEnvironment();
         StoppedObject target = new StoppedObject(new Position(4, 0), radiusTarget);
-        Player player = autoCalculateStrategy ? new PlayerDodger(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
-                : PlayerBuilder.buildPlayerDodgerWithCustomStrategy(env, target, initialPositionDodger, radiusDodger, timeStepDodger, velocityDodgerModule);
+        Player player = PlayerBuilder.buildPlayer(PlayerBuilder.Action.SHOOT, env, target, initialPositionDodger, radiusDodger, timeStepDodger, velocityDodgerModule, securityMargin,
+                collisionPrecision, maxProcessableDodgers, velocityShootModule, radiusShoot);
 
         SwingUtilities.invokeLater(() -> {
             DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(player, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);

@@ -33,7 +33,7 @@ public class ProjectileDestroyer {
         return new Projectile(initialPositionInterceptor, velocity, radiusInterceptor);
     }
 
-    private static Velocity calculateVelocityToInterceptProjectile(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
+    protected static Velocity calculateVelocityToInterceptProjectile(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor) {
 
         Position positionTarget = projectile.getInitialPosition();
         Velocity velocityTarget = projectile.getVelocity();
