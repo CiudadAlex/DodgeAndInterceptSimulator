@@ -38,11 +38,11 @@ public class Main {
         Position initialPositionDodger = new Position(-4, 0);
         Environment env = getEnvironment();
         StoppedObject target = new StoppedObject(new Position(4, 0), radiusTarget);
-        Player playerDodger = autoCalculateStrategy ? new PlayerDodger(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
+        Player player = autoCalculateStrategy ? new PlayerDodger(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
                 : buildPlayerWithCustomStrategy(env, target, initialPositionDodger, radiusDodger, timeStepDodger, velocityDodgerModule);
 
         SwingUtilities.invokeLater(() -> {
-            DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(playerDodger, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);
+            DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(player, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);
             visualizer.show();
         });
     }
