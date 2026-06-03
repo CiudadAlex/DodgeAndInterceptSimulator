@@ -6,8 +6,13 @@ import java.util.function.Function;
 
 public class RootFinder {
 
-    private static Range buildFunctionToFindRootVx(Function<Double, Double> function, double minX, double maxX,
-                                                   double maxDeviationFromZero, int searchGranularity, Function<Double, Boolean> acceptableX) {
+    // double maxYDeviationFromZero
+
+    private static Range reduceRangeOfChangingSign(Function<Double, Double> function, Range rangeX,
+                                                  int searchGranularity, Function<Double, Boolean> acceptableX) {
+
+        double minX = rangeX.getMin();
+        double maxX = rangeX.getMax();
 
         double step = (maxX - minX) / searchGranularity;
         Boolean signPositive = null;
