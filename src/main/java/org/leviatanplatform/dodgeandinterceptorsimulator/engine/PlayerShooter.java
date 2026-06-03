@@ -9,12 +9,19 @@ public class PlayerShooter implements Player {
     private final StoppedObject self;
     private final Environment environment;
     private final StoppedObject target;
+    private final List<Projectile> shoots;
 
 
     public PlayerShooter(StoppedObject self, Environment environment, StoppedObject target) {
         this.self = self;
         this.environment = environment;
         this.target = target;
+        this.shoots = calculateShots();
+    }
+
+    private List<Projectile> calculateShots() {
+        // FIXME finish
+        return List.of();
     }
 
     @Override
@@ -24,8 +31,7 @@ public class PlayerShooter implements Player {
 
     @Override
     public List<Projectile> getShoots() {
-        // FIXME finish
-        return List.of();
+        return shoots;
     }
 
     @Override

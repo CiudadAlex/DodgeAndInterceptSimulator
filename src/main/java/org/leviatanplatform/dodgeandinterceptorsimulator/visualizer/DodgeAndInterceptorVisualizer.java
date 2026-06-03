@@ -5,6 +5,7 @@ import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class DodgeAndInterceptorVisualizer {
 
@@ -98,6 +99,12 @@ public class DodgeAndInterceptorVisualizer {
         if (self == null) {
             frame.setTitle("STOP !!!!");
             return;
+        }
+
+        List<Projectile> shoots = player.getShoots();
+
+        for (Projectile projectile : shoots) {
+            paintMobileObject(projectile, Color.WHITE, time);
         }
 
         long timeLong = Math.round(100 * time);
