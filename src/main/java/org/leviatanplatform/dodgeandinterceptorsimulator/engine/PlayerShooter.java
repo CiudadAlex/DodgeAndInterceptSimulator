@@ -18,7 +18,7 @@ public class PlayerShooter implements Player {
     }
 
     @Override
-    public DodgerSegment getDodgerSegment(double time) {
+    public MobileObject getSelf(double time) {
         // FIXME finish
         return null;
     }

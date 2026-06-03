@@ -93,10 +93,9 @@ public class DodgeAndInterceptorVisualizer {
 
     public void innerPaintCanvas() {
 
-        // FIXME cambiar por MovileObject??
-        DodgerSegment dodgerSegment = player.getDodgerSegment(time);
+        MobileObject self = player.getSelf(time);
 
-        if (dodgerSegment == null) {
+        if (self == null) {
             frame.setTitle("STOP !!!!");
             return;
         }
@@ -109,7 +108,7 @@ public class DodgeAndInterceptorVisualizer {
         Environment environment = player.getEnvironment();
         StoppedObject target = player.getTarget();
 
-        paintMobileObject(dodgerSegment, Color.GREEN, time);
+        paintMobileObject(self, Color.GREEN, time);
 
         for (Projectile projectile : environment.getProjectiles()) {
             paintMobileObject(projectile, Color.YELLOW, time);

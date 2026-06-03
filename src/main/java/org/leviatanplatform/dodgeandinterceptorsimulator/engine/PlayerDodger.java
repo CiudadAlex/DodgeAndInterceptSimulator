@@ -38,7 +38,7 @@ public class PlayerDodger implements Player {
     }
 
     @Override
-    public DodgerSegment getDodgerSegment(double time) {
+    public MobileObject getSelf(double time) {
         return dodger.getDodgerSegment(time);
     }
 
