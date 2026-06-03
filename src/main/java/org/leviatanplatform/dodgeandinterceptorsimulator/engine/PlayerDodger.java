@@ -5,7 +5,7 @@ import org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools.NoCollisio
 
 import java.util.List;
 
-public class PlayerDodger {
+public class PlayerDodger implements Player {
     private final Environment environment;
     private final StoppedObject target;
     private Dodger dodger;
@@ -37,14 +37,22 @@ public class PlayerDodger {
                 collisionPrecision, timeStepDodger, velocityDodgerModule, maxProcessableDodgers);
     }
 
+    @Override
     public DodgerSegment getDodgerSegment(double time) {
         return dodger.getDodgerSegment(time);
     }
 
+    @Override
+    public List<Projectile> getShoots() {
+        return List.of();
+    }
+
+    @Override
     public Environment getEnvironment() {
         return environment;
     }
 
+    @Override
     public StoppedObject getTarget() {
         return target;
     }
