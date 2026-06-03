@@ -1,6 +1,6 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator;
 
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.Player;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.PlayerDodger;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
 import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.FrontProjectilesEnvironment;
 import org.leviatanplatform.dodgeandinterceptorsimulator.exampleenvironments.NothingEnvironment;
@@ -37,16 +37,16 @@ public class Main {
         Position initialPositionDodger = new Position(-4, 0);
         Environment env = getEnvironment();
         StoppedObject target = new StoppedObject(new Position(4, 0), radiusTarget);
-        Player player = autoCalculateStrategy ? new Player(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
+        PlayerDodger playerDodger = autoCalculateStrategy ? new PlayerDodger(initialPositionDodger, radiusDodger, securityMargin, env, target, velocityDodgerModule, timeStepDodger, collisionPrecision, maxProcessableDodgers)
                 : buildPlayerWithCustomStrategy(env, target, initialPositionDodger, radiusDodger, timeStepDodger, velocityDodgerModule);
 
         SwingUtilities.invokeLater(() -> {
-            DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(player, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);
+            DodgeAndInterceptorVisualizer visualizer = new DodgeAndInterceptorVisualizer(playerDodger, w, h, pixelScale, visualizerTimeDelta, visualizerSleepMillis);
             visualizer.show();
         });
     }
 
-    private static Player buildPlayerWithCustomStrategy(Environment env, StoppedObject target, Position initialPositionDodger, int radiusDodger, double timeStepDodger, double velocityDodgerModule) {
+    private static PlayerDodger buildPlayerWithCustomStrategy(Environment env, StoppedObject target, Position initialPositionDodger, int radiusDodger, double timeStepDodger, double velocityDodgerModule) {
 
         List<Movement> listMovement = List.of(
                 Movement.UP, Movement.UP, Movement.UP, Movement.UP,
@@ -64,9 +64,9 @@ public class Main {
             time++;
         }
 
-        Player player = new Player(env, target);
-        player.setStrategy(dodger);
-        return player;
+        PlayerDodger playerDodger = new PlayerDodger(env, target);
+        playerDodger.setStrategy(dodger);
+        return playerDodger;
     }
 
     private static Environment getEnvironment() {

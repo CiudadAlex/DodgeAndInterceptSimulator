@@ -5,13 +5,13 @@ import org.leviatanplatform.dodgeandinterceptorsimulator.engine.tools.NoCollisio
 
 import java.util.List;
 
-public class Player {
+public class PlayerDodger {
     private final Environment environment;
     private final StoppedObject target;
     private Dodger dodger;
 
-    public Player(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target,
-                  double velocityDodgerModule, double timeStepDodger, int collisionPrecision, int maxProcessableDodgers) {
+    public PlayerDodger(Position initialPositionDodger, double radiusDodger, double securityMargin, Environment environment, StoppedObject target,
+                        double velocityDodgerModule, double timeStepDodger, int collisionPrecision, int maxProcessableDodgers) {
         this(environment, target);
 
         List<DodgerSegment> listDodgerSegment = calculateStrategy(initialPositionDodger, radiusDodger, securityMargin, maxProcessableDodgers,
@@ -19,7 +19,7 @@ public class Player {
         this.dodger = new Dodger(initialPositionDodger, radiusDodger, timeStepDodger, listDodgerSegment);
     }
 
-    public Player(Environment environment, StoppedObject target) {
+    public PlayerDodger(Environment environment, StoppedObject target) {
         this.environment = environment;
         this.target = target;
     }

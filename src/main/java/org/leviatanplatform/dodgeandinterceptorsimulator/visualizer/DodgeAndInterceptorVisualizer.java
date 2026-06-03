@@ -1,6 +1,6 @@
 package org.leviatanplatform.dodgeandinterceptorsimulator.visualizer;
 
-import org.leviatanplatform.dodgeandinterceptorsimulator.engine.Player;
+import org.leviatanplatform.dodgeandinterceptorsimulator.engine.PlayerDodger;
 import org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain.*;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ public class DodgeAndInterceptorVisualizer {
 
     private final PixelCanvas pixelCanvas;
 
-    private final Player player;
+    private final PlayerDodger player;
     private double time = 0;
     private final int w;
     private final int h;
@@ -19,7 +19,7 @@ public class DodgeAndInterceptorVisualizer {
     private int millisWaitBetweenMovements = 500;
     private JFrame frame;
 
-    public DodgeAndInterceptorVisualizer(Player player, int w, int h, int pixelScale, double timeDelta, int sleepMillis) {
+    public DodgeAndInterceptorVisualizer(PlayerDodger player, int w, int h, int pixelScale, double timeDelta, int sleepMillis) {
 
         this.player = player;
         this.w = w;
