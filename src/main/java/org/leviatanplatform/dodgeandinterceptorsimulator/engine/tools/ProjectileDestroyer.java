@@ -40,8 +40,13 @@ public class ProjectileDestroyer {
         Function<Double, Boolean> acceptableVx = buildFunctionAcceptableVx(initialPositionInterceptor, positionTarget, velocityTarget);
         Range rangeX = new Range(-velocityModuleInterceptor, velocityModuleInterceptor);
 
-        boolean takePositiveSquareRoot = false;
-        return calculateVelocityWithSquareRootChoice(projectile, velocityModuleInterceptor, initialPositionInterceptor, acceptableVx, rangeX, takePositiveSquareRoot);
+        Velocity velocity = calculateVelocityWithSquareRootChoice(projectile, velocityModuleInterceptor, initialPositionInterceptor, acceptableVx, rangeX, true);
+
+        if (velocity != null) {
+            return velocity;
+        }
+
+        return calculateVelocityWithSquareRootChoice(projectile, velocityModuleInterceptor, initialPositionInterceptor, acceptableVx, rangeX, false);
     }
 
     private static Velocity calculateVelocityWithSquareRootChoice(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor,
