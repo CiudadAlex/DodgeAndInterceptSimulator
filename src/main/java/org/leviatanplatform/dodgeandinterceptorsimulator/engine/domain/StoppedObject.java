@@ -20,4 +20,9 @@ public class StoppedObject implements MobileObject {
     public Position getPosition(double time) {
         return position;
     }
+
+    @Override
+    public boolean isDestroyed() {
+        return false;
+    }
 }

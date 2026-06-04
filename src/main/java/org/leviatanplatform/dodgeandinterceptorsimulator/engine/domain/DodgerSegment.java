@@ -58,4 +58,9 @@ public class DodgerSegment implements MobileObject {
         double elapsedTime = time - initialTime;
         return velocity.getFinalPosition(initialPosition, elapsedTime);
     }
+
+    @Override
+    public boolean isDestroyed() {
+        return false;
+    }
 }

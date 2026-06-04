@@ -127,7 +127,10 @@ public class DodgeAndInterceptorVisualizer {
     }
 
     public void paintMobileObject(MobileObject mobileObject, Color color, double time) {
-        pixelCanvas.setCircle(mobileObject.getPosition(time), mobileObject.getRadius(), color);
+
+        if (!mobileObject.isDestroyed()) {
+            pixelCanvas.setCircle(mobileObject.getPosition(time), mobileObject.getRadius(), color);
+        }
     }
 
     public void accelerateMovement(float acceleratingFactor) {

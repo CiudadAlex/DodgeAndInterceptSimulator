@@ -34,6 +34,11 @@ public class Dodger implements MobileObject {
         return positionAtTimeZero;
     }
 
+    @Override
+    public boolean isDestroyed() {
+        return false;
+    }
+
     public DodgerSegment getDodgerSegment(double time) {
 
         for (DodgerSegment dodgerSegment : listDodgerSegment) {

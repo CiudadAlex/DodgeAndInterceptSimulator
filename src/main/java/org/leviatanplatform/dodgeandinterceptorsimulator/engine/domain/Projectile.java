@@ -2,9 +2,10 @@ package org.leviatanplatform.dodgeandinterceptorsimulator.engine.domain;
 
 public class Projectile implements MobileObject {
 
-    protected Position initialPosition;
-    protected Velocity velocity;
-    protected double radius;
+    private final Position initialPosition;
+    private final Velocity velocity;
+    private final double radius;
+    private boolean destroyed = false;
 
     public Projectile(Position initialPosition, Velocity velocity, double radius) {
         this.initialPosition = initialPosition;
@@ -26,5 +27,14 @@ public class Projectile implements MobileObject {
 
     public Position getPosition(double time) {
         return velocity.getFinalPosition(initialPosition, time);
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void destroy() {
+        destroyed = true;
     }
 }
