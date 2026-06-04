@@ -41,6 +41,12 @@ public class ProjectileDestroyer {
         Range rangeX = new Range(-velocityModuleInterceptor, velocityModuleInterceptor);
 
         boolean takePositiveSquareRoot = false;
+        return calculateVelocityWithSquareRootChoice(projectile, velocityModuleInterceptor, initialPositionInterceptor, acceptableVx, rangeX, takePositiveSquareRoot);
+    }
+
+    private static Velocity calculateVelocityWithSquareRootChoice(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor,
+                                                                  Function<Double, Boolean> acceptableVx, Range rangeX, boolean takePositiveSquareRoot) {
+
         Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor, takePositiveSquareRoot);
         Double rootVx = RootFinder.findRootValueForX(functionToFindRootVx, rangeX, SEARCH_GRANULARITY, acceptableVx, MAX_ROOT_DEVIATION_FROM_ZERO);
 
@@ -48,7 +54,6 @@ public class ProjectileDestroyer {
             return null;
         }
 
-        // FIXME review vy sign
         double vy = getValueOtherVelocityComponent(velocityModuleInterceptor, rootVx, takePositiveSquareRoot);
 
         return new Velocity(rootVx, vy);
