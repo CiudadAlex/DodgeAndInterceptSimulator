@@ -94,6 +94,8 @@ public class DodgeAndInterceptorVisualizer {
 
     public void innerPaintCanvas() {
 
+        player.destroyProjectiles(time);
+
         MobileObject self = player.getSelf(time);
 
         if (self == null) {
