@@ -37,12 +37,11 @@ public class ProjectileDestroyer {
 
         Position positionTarget = projectile.getInitialPosition();
         Velocity velocityTarget = projectile.getVelocity();
-        boolean takePositiveSquareRoot = false;
-
-        Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor, takePositiveSquareRoot);
         Function<Double, Boolean> acceptableVx = buildFunctionAcceptableVx(initialPositionInterceptor, positionTarget, velocityTarget);
         Range rangeX = new Range(-velocityModuleInterceptor, velocityModuleInterceptor);
 
+        boolean takePositiveSquareRoot = false;
+        Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor, takePositiveSquareRoot);
         Double rootVx = RootFinder.findRootValueForX(functionToFindRootVx, rangeX, SEARCH_GRANULARITY, acceptableVx, MAX_ROOT_DEVIATION_FROM_ZERO);
 
         if (rootVx == null) {
