@@ -10,8 +10,6 @@ import javax.swing.*;
 
 public class Main {
 
-    // FIXME test shooter (ver por que solo se genera un shoot)
-
     public static void main(String[] args) {
 
         boolean autoCalculateStrategy = true;

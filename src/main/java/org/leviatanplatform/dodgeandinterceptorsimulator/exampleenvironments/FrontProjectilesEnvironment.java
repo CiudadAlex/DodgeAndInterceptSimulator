@@ -13,15 +13,22 @@ public class FrontProjectilesEnvironment implements Environment {
     private final double verticalSeparation;
     private final int numProjectiles;
 
+    private final List<Projectile> listProjectile;
+
     public FrontProjectilesEnvironment(double moduleVelocity, double initialX, double verticalSeparation, int numProjectiles) {
         this.moduleVelocity = moduleVelocity;
         this.initialX = initialX;
         this.verticalSeparation = verticalSeparation;
         this.numProjectiles = numProjectiles;
+        this.listProjectile = buildProjectiles();
     }
 
     @Override
     public List<Projectile> getProjectiles() {
+        return listProjectile;
+    }
+
+    private List<Projectile> buildProjectiles() {
 
         List<Projectile> listProjectile = new ArrayList<>();
 
