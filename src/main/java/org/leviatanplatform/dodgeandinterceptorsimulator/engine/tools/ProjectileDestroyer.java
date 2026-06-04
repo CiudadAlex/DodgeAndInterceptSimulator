@@ -37,9 +37,9 @@ public class ProjectileDestroyer {
 
         Position positionTarget = projectile.getInitialPosition();
         Velocity velocityTarget = projectile.getVelocity();
-        boolean takePositiveRoot = false;
+        boolean takePositiveSquareRoot = false;
 
-        Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor, takePositiveRoot);
+        Function<Double, Double> functionToFindRootVx = buildFunctionToFindRootVx(projectile, velocityModuleInterceptor, initialPositionInterceptor, takePositiveSquareRoot);
         Function<Double, Boolean> acceptableVx = buildFunctionAcceptableVx(initialPositionInterceptor, positionTarget, velocityTarget);
         Range rangeX = new Range(-velocityModuleInterceptor, velocityModuleInterceptor);
 
@@ -50,7 +50,7 @@ public class ProjectileDestroyer {
         }
 
         // FIXME review vy sign
-        double vy = getValueOtherVelocityComponent(velocityModuleInterceptor, rootVx, takePositiveRoot);
+        double vy = getValueOtherVelocityComponent(velocityModuleInterceptor, rootVx, takePositiveSquareRoot);
 
         return new Velocity(rootVx, vy);
     }
@@ -68,7 +68,7 @@ public class ProjectileDestroyer {
         };
     }
 
-    private static Function<Double, Double> buildFunctionToFindRootVx(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor, boolean takePositiveRoot) {
+    private static Function<Double, Double> buildFunctionToFindRootVx(Projectile projectile, double velocityModuleInterceptor, Position initialPositionInterceptor, boolean takePositiveSquareRoot) {
 
         Position positionTarget = projectile.getInitialPosition();
         Velocity velocityTarget = projectile.getVelocity();
@@ -78,13 +78,13 @@ public class ProjectileDestroyer {
         double Aox = getAox(initialPositionInterceptor, positionTarget);
         double Aoy = getAoy(initialPositionInterceptor, positionTarget);
 
-        return (vxS) -> (vyT - getValueOtherVelocityComponent(velocityModuleInterceptor, vxS, takePositiveRoot)) * Aox - (vxT - vxS) * Aoy;
+        return (vxS) -> (vyT - getValueOtherVelocityComponent(velocityModuleInterceptor, vxS, takePositiveSquareRoot)) * Aox - (vxT - vxS) * Aoy;
     }
 
-    private static double getValueOtherVelocityComponent(double velocityModuleInterceptor, double vi, boolean takePositiveRoot) {
+    private static double getValueOtherVelocityComponent(double velocityModuleInterceptor, double vi, boolean takePositiveSquareRoot) {
         double vM2 = velocityModuleInterceptor * velocityModuleInterceptor;
         double vi2 = vi * vi;
-        double sign = takePositiveRoot ? 1 : -1;
+        double sign = takePositiveSquareRoot ? 1 : -1;
         return sign * Math.sqrt(vM2 - vi2);
     }
 
